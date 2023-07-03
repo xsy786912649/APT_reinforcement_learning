@@ -3,6 +3,7 @@ import numpy as np
 import pickle
 from pomdp import *
 from model import *
+import os
 
 with open(f'./APT_data/hop.pickle','rb') as f:
     P0=pickle.load(f)
@@ -24,7 +25,13 @@ def higher_state_to_valuedic_key(higher_state_current_machine,higher_state_curre
 if __name__ == "__main__":
     with open(f'./model.pkl','rb') as f:
         value_map_dict=pickle.load(f)
-    value_map_dict_further={}
+
+    if os.path.exists('./model_phase2.pkl'):
+        with open(f'./model_phase2.pkl','rb') as f:
+            value_map_dict_further=pickle.load(f)
+        input()
+    else:
+        value_map_dict_further={}
 
     for q in range(2000):
         print("--------------------") 
