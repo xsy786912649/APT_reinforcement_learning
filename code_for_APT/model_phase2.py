@@ -29,7 +29,6 @@ if __name__ == "__main__":
     if os.path.exists('./model_phase2.pkl'):
         with open(f'./model_phase2.pkl','rb') as f:
             value_map_dict_further=pickle.load(f)
-        input()
     else:
         value_map_dict_further={}
 
@@ -45,8 +44,8 @@ if __name__ == "__main__":
             higher_state_current_machine,higher_state_current_cred=full_state_to_higher_state(machine_state_list,cred_state_list)
             current_valuedic_key=higher_state_to_valuedic_key(higher_state_current_machine,higher_state_current_cred)
             
-            if value_map_dict_further in list(value_map_dict_further):
-                Q_value_current=value_map_dict_further[current_valuedic_key]
+            if current_valuedic_key in list(value_map_dict_further):
+                Q_value_current=value_map_dict_further[current_valuedic_key]   
             else:
                 value_map_dict_further[current_valuedic_key]=[0.0 for i in range(1+14+7*13)]
                 Q_value_current=value_map_dict_further[current_valuedic_key]

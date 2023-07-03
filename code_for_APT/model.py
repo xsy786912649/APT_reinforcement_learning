@@ -120,7 +120,11 @@ def simplest_state_to_valuedic_key(machine_simplest_state,cred_simplest_state):
             valuedic_key+=int(pow(2,i))
     return valuedic_key
 
-def random_attacker_start(my_pomdp):
+def random_attacker_start(my_pomdp, seed=None) :
+    if not seed == None:
+        random.seed(seed)
+        np.random.seed(seed)
+
     my_pomdp.reset()
     initial_compro_machine_index=random.randint(0, my_pomdp.machine_number-1)
     while machine_index_to_name(initial_compro_machine_index) in N_hop[3]+N_hop[4]+N_hop[5]+N_hop[6]:
