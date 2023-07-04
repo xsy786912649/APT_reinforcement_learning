@@ -149,8 +149,11 @@ def random_attacker_start(my_pomdp, seed=None) :
     for index in cred_state_list_index:
         cred_state_list[index]=True
 
-    machine_state_list_belief_prability=[0.02 for i in range(len(machine_state_list))]
-    cred_state_list_belief_prability=[0.02 for i in range(len(cred_state_list))]
+    machine_state_list_belief_prability=np.array([0.03 for i in range(len(machine_state_list))])
+    cred_state_list_belief_prability=np.array([0.03 for i in range(len(cred_state_list))])
+
+    random.seed(None)
+    np.random.seed(None)
 
     return machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability 
 

@@ -83,8 +83,8 @@ def state_observation(machine_state_list=[False]*machine_number,cred_state_list=
     using_cred_obervation=[]
     non_obtained_cred_observation=[]
     for machine_index in action_observation_list:
-        obtained_cred_obervation.append(set(obtained_cred[machine_index]))
-        using_cred_obervation.append(set(using_cred_stored[machine_index]))
+        obtained_cred_obervation.append(list(set(obtained_cred[machine_index])))
+        using_cred_obervation.append(list(set(using_cred_stored[machine_index])))
         non_obtained_cred_observation.append([cred for cred in stored_cred[machine_index] if cred not in obtained_cred[machine_index]])
 
         #print(observation_machine)
@@ -202,9 +202,12 @@ if __name__ == "__main__":
             #print([machine_has_compr[j] for j in range(len(machine_has_compr)) if machine_has_compr_hop[j]==1])
             input()
 
-        action_observation_list=[0]
-        state_observation(machine_state_list,cred_state_list,action_observation_list) 
-        
+        action_observation_list=[11,12]
+        observation_machine,obtained_cred_obervation,using_cred_obervation,non_obtained_cred_observation=state_observation(machine_state_list,cred_state_list,action_observation_list) 
+        print("-----")
+        print(observation_machine)
+        print(obtained_cred_obervation)
+        input()
         #print(obtained_cred)
         #if len([index for index in range(len(machine_state_list)) if machine_state_list[index]==True])>1:
         #    input()

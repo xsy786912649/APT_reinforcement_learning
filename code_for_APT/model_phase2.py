@@ -32,7 +32,7 @@ if __name__ == "__main__":
     else:
         value_map_dict_further={}
 
-    for q in range(2000):
+    for q in range(4000):
         print("--------------------") 
         print(q)
 

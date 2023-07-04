@@ -63,8 +63,8 @@ class POMDP:
         credential_list=self.highest_level_credential_list+self.middle_level_credential_list+self.lowest_level_credential_list
         credential_list.sort(key=lambda x: int(x[4:]))
         self.credential_number=len(credential_list)
-        print(self.machine_number)
-        print(self.credential_number)
+        #print(self.machine_number)
+        #print(self.credential_number)
 
         self.hop=0
         with open(f'./APT_data/hop.pickle','rb') as f:
@@ -83,14 +83,17 @@ class POMDP:
         using_cred_obervation=[]
         non_obtained_cred_observation=[]
         for machine_index in action_observation_list:
-            obtained_cred_obervation.append(set(self.obtained_cred[machine_index]))
-            using_cred_obervation.append(set(self.using_cred_stored[machine_index]))
+            obtained_cred_obervation.append(list(set(self.obtained_cred[machine_index])))
+            using_cred_obervation.append(list(set(self.using_cred_stored[machine_index])))
             non_obtained_cred_observation.append([cred for cred in self.stored_cred[machine_index] if cred not in self.obtained_cred[machine_index]])
 
 
         return observation_machine,obtained_cred_obervation,using_cred_obervation,non_obtained_cred_observation
 
     def state_transition(self,machine_state_list,cred_state_list,action_contain_list=[]):
+
+        if (not (True in machine_state_list)) or (not (True in cred_state_list)):
+            return machine_state_list,cred_state_list
 
         if not action_contain_list == []:
             assert is_number(action_contain_list[0])
@@ -138,6 +141,59 @@ class POMDP:
                                 
                     self.using_cred_stored[machine_name_to_index(plan_compromise_machine)].append(using_cred)
                     self.obtained_cred[machine_name_to_index(plan_compromise_machine)].extend(obtained_cred_this_machine.copy())
+
+        return machine_state_list,cred_state_list
+
+    def state_transition_temp(self,machine_state_list,cred_state_list,action_contain_list=[]):
+
+        assert (machine_state_list[0]==True or machine_state_list[0]==False)
+
+        if (not (True in machine_state_list)) or (not (True in cred_state_list)):
+            return machine_state_list,cred_state_list
+
+        if not action_contain_list == []:
+            assert is_number(action_contain_list[0])
+
+        contain_machine_name_list=[machine_index_to_name(index) for index in action_contain_list]
+        available_cred= [cred_index_to_name(index) for index in range(len(cred_state_list)) if cred_state_list[index]==True]
+
+        for n in range(len(machine_state_list)):
+            if machine_state_list[n]==True and (n not in action_contain_list):
+                neighbors_of_n_list=list(self.G.neighbors(self.machine_list[n]))
+                neighbors_of_n_list_noncompromised=[machine for machine in neighbors_of_n_list if machine_state_list[machine_name_to_index(machine)]==False]
+                potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
+                if potential_plan_compromise_list==[]:
+                    continue
+
+                plan_compromise_machine=random.choice(potential_plan_compromise_list)
+
+                if plan_compromise_machine in contain_machine_name_list:
+                    continue
+
+                using_cred=random.choice(available_cred)
+                good_cred_list=list(self.node_dic[plan_compromise_machine])
+                if using_cred not in good_cred_list:
+                    continue
+                elif using_cred in good_cred_list:
+                    machine_state_list[machine_name_to_index(plan_compromise_machine)]=True
+                    may_obtain_cred= self.node_dic[plan_compromise_machine][using_cred]
+                    may_obtain_cred_index=[cred_name_to_index(cred_name) for cred_name in may_obtain_cred]
+
+                    obtained_cred_this_machine=[]
+                    if using_cred in self.highest_level_credential_list:
+                        for index in may_obtain_cred_index:
+                            cred_state_list[index]=True
+                            obtained_cred_this_machine.append(cred_index_to_name(index))
+                    elif using_cred in self.middle_level_credential_list:
+                        for index in may_obtain_cred_index:
+                            if np.random.rand(1)<0.7:
+                                cred_state_list[index]=True
+                                obtained_cred_this_machine.append(cred_index_to_name(index))
+                    elif using_cred in self.lowest_level_credential_list:
+                        for index in may_obtain_cred_index:
+                            if np.random.rand(1)<0.4:
+                                cred_state_list[index]=True
+                                obtained_cred_this_machine.append(cred_index_to_name(index))
 
         return machine_state_list,cred_state_list
     
