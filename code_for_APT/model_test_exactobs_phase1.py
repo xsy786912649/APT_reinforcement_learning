@@ -116,7 +116,7 @@ if __name__ == "__main__":
             total_iteration=total_iteration+1
             total_containing_number+=len(action_contain_list)
             print("------------reminder_---------------")
-            print(str(times)+"/"+str(q+1))
+            print(str(times)+"/"+str(q))
             if times>0:
                 print(1.0*average_number/times)
             print("------------next____________")
