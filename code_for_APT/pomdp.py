@@ -3,6 +3,7 @@ import math
 import numpy as np
 import pickle
 import random
+import copy
 
 def machine_index_to_name(index):
     return 'comp'+str(index)
@@ -140,7 +141,7 @@ class POMDP:
                                 obtained_cred_this_machine.append(cred_index_to_name(index))
                                 
                     self.using_cred_stored[machine_name_to_index(plan_compromise_machine)].append(using_cred)
-                    self.obtained_cred[machine_name_to_index(plan_compromise_machine)].extend(obtained_cred_this_machine.copy())
+                    self.obtained_cred[machine_name_to_index(plan_compromise_machine)].extend(copy.deepcopy(obtained_cred_this_machine))
 
         return machine_state_list,cred_state_list
 

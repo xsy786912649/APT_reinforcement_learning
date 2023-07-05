@@ -13,7 +13,7 @@ for index_machine in list(P0):
 target=N_hop[0]
 hop_1=N_hop[1]
 hop_2=N_hop[2]
-hop_2=N_hop[3]
+hop_3=N_hop[3]
 
 def estimate_state(machine_state_list_belief_prability,cred_state_list_belief_prability):
     
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     times=0
     total_iteration=0
     total_containing_number=0
-    for q in range(10):
+    for q in range(50):
         print("--------------------") 
         print(q)
 
@@ -136,4 +136,5 @@ if __name__ == "__main__":
     average_number=average_number/times
     total_containing_number_fre=total_containing_number/total_iteration
     print(average_number)
+    print(total_containing_number_fre)
     print(times)

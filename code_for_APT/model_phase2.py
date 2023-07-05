@@ -4,6 +4,7 @@ import pickle
 from pomdp import *
 from model import *
 import os
+import copy
 
 with open(f'./APT_data/hop.pickle','rb') as f:
     P0=pickle.load(f)
@@ -49,7 +50,7 @@ if __name__ == "__main__":
             else:
                 simplest_state_current_machine,simplest_state_current_cred=full_state_to_simplest_state(machine_state_list,cred_state_list)
                 simplest_current_valuedic_key=simplest_state_to_valuedic_key(simplest_state_current_machine,simplest_state_current_cred)
-                value_map_dict_further[current_valuedic_key]=value_map_dict[simplest_current_valuedic_key]
+                value_map_dict_further[current_valuedic_key]=copy.deepcopy(value_map_dict[simplest_current_valuedic_key])
                 Q_value_current=value_map_dict_further[current_valuedic_key]
 
             action_index=0
