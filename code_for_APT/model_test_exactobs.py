@@ -77,11 +77,11 @@ if __name__ == "__main__":
         observation_true_list=[]
 
         for i in range(5000):
-            machine_state_list_estimated,cred_state_list_estimated=estimate_state(machine_state_list_belief_prability,cred_state_list_belief_prability)
+            machine_state_list_estimated=machine_state_list
+            cred_state_list_estimated=cred_state_list
             higher_state_current_machine,higher_state_current_cred=full_state_to_higher_state(machine_state_list_estimated,cred_state_list_estimated) 
             current_valuedic_key=higher_state_to_valuedic_key(higher_state_current_machine,higher_state_current_cred) 
 
-            print(machine_state_list_estimated)
             if current_valuedic_key in list(value_map_dict_further): 
                 Q_value_current=value_map_dict_further[current_valuedic_key] 
             else:
@@ -113,8 +113,7 @@ if __name__ == "__main__":
             print(machine_state_list_belief_prability[action_observation_list[0]],machine_state_list_belief_prability[action_observation_list[1]])
 
             my_pomdp_tem=POMDP()
-            machine_state_list_belief_prability,cred_state_list_belief_prability=belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_state_list_belief_prability,action_contain_list,observation_machine,obtained_cred_obervation,action_observation_list,observation_true_list)
-    
+            
             #print(machine_state_list_belief_prability)
             #print([machine_state_list_belief_prability[i] for i in range(len(machine_state_list_belief_prability)) if machine_index_to_name(i) in N_hop[1]+N_hop[2]])
             print(machine_state_list_belief_prability[action_observation_list[0]],machine_state_list_belief_prability[action_observation_list[1]])
