@@ -17,7 +17,7 @@ hop_2=N_hop[2]
 my_pomdp1=POMDP()
 
 gamma=0.999
-eps=0.2
+eps=0.5
 lr=0.1
 
 def higher_state_to_valuedic_key(higher_state_current_machine,higher_state_current_cred):

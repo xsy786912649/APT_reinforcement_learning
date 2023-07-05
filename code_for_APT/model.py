@@ -14,15 +14,15 @@ hop_2=N_hop[2]
 my_pomdp1=POMDP()
 
 gamma=0.999
-eps=0.2
+eps=0.5
 lr=0.1
 
 def index_to_action(index):
     if index==0:
         return []
-    if index>=1 and index<=14:
+    elif index>=1 and index<=14:
         return [machine_name_to_index(hop_1[index-1])]
-    if index>14:
+    elif index>14:
         if index-14<=13:
             a1=0
             b1=index-14
@@ -168,7 +168,7 @@ if __name__ == "__main__":
             for k in range(j):
                 value_map_dict[i].append(0.0)
 
-    for q in range(2000):
+    for q in range(4000):
         print("--------------------") 
         print(q)
 
