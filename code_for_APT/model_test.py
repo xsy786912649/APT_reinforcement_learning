@@ -81,7 +81,6 @@ if __name__ == "__main__":
             higher_state_current_machine,higher_state_current_cred=full_state_to_higher_state(machine_state_list_estimated,cred_state_list_estimated) 
             current_valuedic_key=higher_state_to_valuedic_key(higher_state_current_machine,higher_state_current_cred) 
 
-            print(machine_state_list_estimated)
             if current_valuedic_key in list(value_map_dict_further): 
                 Q_value_current=value_map_dict_further[current_valuedic_key] 
             else:
