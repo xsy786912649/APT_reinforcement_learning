@@ -66,7 +66,9 @@ if __name__ == "__main__":
 
     average_number=0
     times=0
-    for q in range(50):
+    total_iteration=0
+    total_containing_number=0
+    for q in range(10):
         print("--------------------") 
         print(q)
 
@@ -113,10 +115,16 @@ if __name__ == "__main__":
             machine_state_list_belief_prability,cred_state_list_belief_prability=belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_state_list_belief_prability,action_contain_list,observation_machine,obtained_cred_obervation,action_observation_list,observation_true_list)
     
             #print(machine_state_list_belief_prability)
-            print([machine_state_list_belief_prability[i] for i in range(len(machine_state_list_belief_prability)) if machine_index_to_name(i) in N_hop[1]+N_hop[2]])
+            #print([machine_state_list_belief_prability[i] for i in range(len(machine_state_list_belief_prability)) if machine_index_to_name(i) in N_hop[1]+N_hop[2]])
             print(machine_state_list_belief_prability[action_observation_list[0]],machine_state_list_belief_prability[action_observation_list[1]])
             print(i) 
-            print("------------next---------------")
+            total_iteration=total_iteration+1
+            total_containing_number+=len(action_contain_list)
+            print("------------reminder_---------------")
+            print(str(times)+"/"+str(q+1))
+            if times>0:
+                print(1.0*average_number/times)
+            print("------------next____________")
 
             machine_has_compr=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
             machine_has_compr_hop=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr] 
@@ -126,5 +134,6 @@ if __name__ == "__main__":
                 break
 
     average_number=average_number/times
+    total_containing_number_fre=total_containing_number/total_iteration
     print(average_number)
     print(times)
