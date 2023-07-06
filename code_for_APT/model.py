@@ -13,9 +13,8 @@ hop_1=N_hop[1]
 hop_2=N_hop[2]
 my_pomdp1=POMDP()
 
-gamma=0.999
-eps=0.5
-lr=0.1
+eps=0.3
+lr=0.5
 
 def index_to_action(index):
     if index==0:
@@ -162,11 +161,11 @@ if __name__ == "__main__":
     value_map_dict = {}
     for i in range(pow(2,15)):
         value_map_dict[i]=[]
-        value_map_dict[i].append(0.0)
+        value_map_dict[i].append(5000.0)
         for j in range(14):
-            value_map_dict[i].append(0.0)
+            value_map_dict[i].append(5000.0)
             for k in range(j):
-                value_map_dict[i].append(0.0)
+                value_map_dict[i].append(5000.0)
 
     for q in range(10000):
         print("--------------------") 
@@ -192,30 +191,34 @@ if __name__ == "__main__":
             machine_state_list_new,cred_state_list_new=my_pomdp.state_transition(machine_state_list,cred_state_list,action_contain_list)
             
             #if the state is interesting, update the q table
-            machine_has_compr=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
-            machine_has_compr_hop=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr] 
-            if (0 in machine_has_compr_hop) or (1 in machine_has_compr_hop) or (1 in machine_has_compr_hop): 
+            #machine_has_compr=[index for index in range(len(machine_state_list)) if machine_state_list[index]==True] 
+            #machine_has_compr_hop=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr] 
+            machine_has_compr_new=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
+            machine_has_compr_hop_new=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr_new] 
+
+            if ((0 in machine_has_compr_hop_new) or (1 in machine_has_compr_hop_new) or (1 in machine_has_compr_hop_new)): 
                 simplest_state_new_machine,simplest_state_new_cred=full_state_to_simplest_state(machine_state_list_new,cred_state_list_new)
                 new_valuedic_key=simplest_state_to_valuedic_key(simplest_state_new_machine,simplest_state_new_cred)
                 Q_value_new=value_map_dict[new_valuedic_key]
 
                 reward_safe=0.0
-                if 0 in machine_has_compr_hop:
-                    reward_safe=-1.0
+                if 0 in machine_has_compr_hop_new:
+                    reward_safe=-10.0
                 reward_avai=float(len(action_contain_list))*(-0.1)
                 reward=reward_safe+reward_avai
-                if 0 not in machine_has_compr_hop:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+max(Q_value_new)*gamma)
+                if 0 not in machine_has_compr_hop_new:
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+4999.0/5000*max(Q_value_new))
                 else:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward-gamma/(1.0-gamma))
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward-4990.0)
 
                 print(simplest_state_new_machine,simplest_state_new_cred)
+                print(value_map_dict[current_valuedic_key][action_index])
             
             machine_state_list=machine_state_list_new
             cred_state_list=cred_state_list_new
             print(i) 
 
-            if 0 in machine_has_compr_hop:
+            if 0 in machine_has_compr_hop_new:
                 print(value_map_dict[current_valuedic_key])
                 break
 

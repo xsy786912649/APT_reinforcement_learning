@@ -16,9 +16,8 @@ hop_1=N_hop[1]
 hop_2=N_hop[2]
 my_pomdp1=POMDP()
 
-gamma=0.999
-eps=0.5
-lr=0.1
+eps=0.3
+lr=0.5
 
 def higher_state_to_valuedic_key(higher_state_current_machine,higher_state_current_cred):
     return tuple(higher_state_current_machine+higher_state_current_cred)
@@ -64,9 +63,9 @@ if __name__ == "__main__":
             machine_state_list_new,cred_state_list_new=my_pomdp.state_transition(machine_state_list,cred_state_list,action_contain_list)
             
             #if the state is interesting, update the q table
-            machine_has_compr=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
-            machine_has_compr_hop=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr] 
-            if (0 in machine_has_compr_hop) or (1 in machine_has_compr_hop) or (2 in machine_has_compr_hop): 
+            machine_has_compr_new=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
+            machine_has_compr_hop_new=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr_new] 
+            if (0 in machine_has_compr_hop_new) or (1 in machine_has_compr_hop_new) or (2 in machine_has_compr_hop_new): 
                 higher_state_new_machine,higher_state_new_cred=full_state_to_higher_state(machine_state_list_new,cred_state_list_new)
                 new_valuedic_key_higher=higher_state_to_valuedic_key(higher_state_new_machine,higher_state_new_cred)
                 if new_valuedic_key_higher in list(value_map_dict_further):
@@ -77,14 +76,14 @@ if __name__ == "__main__":
                     Q_value_new=value_map_dict[new_valuedic_key_simplest] 
                     
                 reward_safe=0.0
-                if 0 in machine_has_compr_hop:
-                    reward_safe=-1.0
+                if 0 in machine_has_compr_hop_new:
+                    reward_safe=-10.0
                 reward_avai=float(len(action_contain_list))*(-0.1)
                 reward=reward_safe+reward_avai
-                if 0 not in machine_has_compr_hop:
-                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward+max(Q_value_new)*gamma)
+                if 0 not in machine_has_compr_hop_new:
+                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward+4999.0/5000*max(Q_value_new))
                 else:
-                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward-gamma/(1.0-gamma))
+                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward-4990.0)
 
                 print(higher_state_current_machine,higher_state_current_cred)
             
@@ -92,7 +91,7 @@ if __name__ == "__main__":
             cred_state_list=cred_state_list_new
             print(i) 
 
-            if 0 in machine_has_compr_hop:
+            if 0 in machine_has_compr_hop_new:
                 break
 
             #print(full_state_to_simplest_state(machine_state_list,cred_state_list))
