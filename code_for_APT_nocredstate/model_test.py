@@ -98,7 +98,7 @@ if __name__ == "__main__":
             observation_list=[machine_name_to_index(ele) for ele in N_hop[1]+N_hop[2]]
             action_observation_list=random.sample(observation_list,2)
 
-            observation_machine,_,_,_=my_pomdp.state_observation(machine_state_list,cred_state_list,action_observation_list) 
+            observation_machine=my_pomdp.state_observation(machine_state_list,action_observation_list) 
             print(action_observation_list)
             print(observation_machine)
 

@@ -74,7 +74,7 @@ class POMDP:
         for index_machine in list(self.hop):
             self.N_hop[int(self.hop[index_machine])].append(index_machine)
 
-    def state_observation(self,machine_state_list,cred_state_list,action_observation_list=[]):
+    def state_observation(self,machine_state_list,action_observation_list=[]):
 
         if not action_observation_list == []:
             assert is_number(action_observation_list[0])
@@ -212,6 +212,8 @@ class POMDP:
 
         return
 
+
+"""
 if __name__ == "__main__":
     my_pomdp=POMDP()
 
@@ -257,4 +259,4 @@ if __name__ == "__main__":
         if 0 in machine_has_compr_hop:
             #print([machine_has_compr[j] for j in range(len(machine_has_compr)) if machine_has_compr_hop[j]==1])
             input()
-
+"""
