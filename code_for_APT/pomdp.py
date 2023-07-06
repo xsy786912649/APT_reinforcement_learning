@@ -92,6 +92,9 @@ class POMDP:
         return observation_machine,obtained_cred_obervation,using_cred_obervation,non_obtained_cred_observation
 
     def state_transition(self,machine_state_list,cred_state_list,action_contain_list=[]):
+        
+        machine_state_list=copy.deepcopy(machine_state_list)
+        cred_state_list=copy.deepcopy(cred_state_list)
 
         if (not (True in machine_state_list)) or (not (True in cred_state_list)):
             return machine_state_list,cred_state_list

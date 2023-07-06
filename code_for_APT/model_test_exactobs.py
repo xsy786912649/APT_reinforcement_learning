@@ -99,24 +99,6 @@ if __name__ == "__main__":
             machine_state_list=machine_state_list_new
             cred_state_list=cred_state_list_new
 
-            observation_list=[machine_name_to_index(ele) for ele in N_hop[1]+N_hop[2]]
-            action_observation_list=random.sample(observation_list,2)
-
-            observation_machine,obtained_cred_obervation,_,_=my_pomdp.state_observation(machine_state_list,cred_state_list,action_observation_list) 
-            print(action_observation_list)
-            print(observation_machine)
-
-            for qq in range(len(observation_machine)):
-                if observation_machine[qq]==True:
-                    observation_true_list.append(action_observation_list[qq])
-
-            print(machine_state_list_belief_prability[action_observation_list[0]],machine_state_list_belief_prability[action_observation_list[1]])
-
-            my_pomdp_tem=POMDP()
-            
-            #print(machine_state_list_belief_prability)
-            #print([machine_state_list_belief_prability[i] for i in range(len(machine_state_list_belief_prability)) if machine_index_to_name(i) in N_hop[1]+N_hop[2]])
-            print(machine_state_list_belief_prability[action_observation_list[0]],machine_state_list_belief_prability[action_observation_list[1]])
             print(i) 
             total_iteration=total_iteration+1
             total_containing_number+=len(action_contain_list)
