@@ -161,11 +161,11 @@ if __name__ == "__main__":
     value_map_dict = {}
     for i in range(pow(2,15)):
         value_map_dict[i]=[]
-        value_map_dict[i].append(5000.0)
+        value_map_dict[i].append(-5000.0)
         for j in range(14):
-            value_map_dict[i].append(5000.0)
+            value_map_dict[i].append(-5000.0)
             for k in range(j):
-                value_map_dict[i].append(5000.0)
+                value_map_dict[i].append(-5000.0)
 
     for q in range(10000):
         print("--------------------") 
