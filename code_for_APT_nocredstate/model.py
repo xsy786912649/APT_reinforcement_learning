@@ -156,25 +156,29 @@ if __name__ == "__main__":
         my_pomdp=POMDP()
         machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp)
         
+        no_change_action=False
+        action_index=0
+        action_contain_list=[]
+
         for i in range(5000):
             #choose action based on eps-greedy policy
             simplest_state_current_machine=full_state_to_simplest_state(machine_state_list)
             current_valuedic_key=simplest_state_to_valuedic_key(simplest_state_current_machine)
             Q_value_current=value_map_dict[current_valuedic_key]
 
-            action_index=0
-            if np.random.rand(1)<eps:
-                action_index=random.randint(0, len(Q_value_current)-1)
-            else:
-                action_index=Q_value_current.index(max(Q_value_current))
-            action_contain_list=index_to_action(action_index)
+            if no_change_action==False:
+                #action_index=0
+                if np.random.rand(1)<eps:
+                    action_index=random.randint(0, len(Q_value_current)-1)
+                else:
+                    action_index=Q_value_current.index(max(Q_value_current))
+                action_contain_list=index_to_action(action_index)
 
             #state_transition
             machine_state_list_new,cred_state_list_new=my_pomdp.state_transition(machine_state_list,cred_state_list,action_contain_list)
             
             #if the state is interesting, update the q table
-            #machine_has_compr=[index for index in range(len(machine_state_list)) if machine_state_list[index]==True] 
-            #machine_has_compr_hop=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr] 
+        
             machine_has_compr_new=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
             machine_has_compr_hop_new=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr_new] 
 
@@ -196,8 +200,14 @@ if __name__ == "__main__":
                 print(simplest_state_new_machine)
                 print(value_map_dict[current_valuedic_key][action_index])
             
+            if full_state_to_simplest_state(machine_state_list)==full_state_to_simplest_state(machine_state_list_new):
+                no_change_action=True
+            else:
+                no_change_action=False
+
             machine_state_list=machine_state_list_new
             cred_state_list=cred_state_list_new
+            print(action_contain_list)
             print(i) 
 
             if 0 in machine_has_compr_hop_new:
