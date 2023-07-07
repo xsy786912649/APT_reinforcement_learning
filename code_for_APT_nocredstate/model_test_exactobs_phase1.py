@@ -63,9 +63,6 @@ if __name__ == "__main__":
             print("action")
             print([(machine_name_to_index(me) in action_contain_list) for me in hop_1])
             
-            if not new_machine_has_compr_1hop==machine_has_compr_1hop:
-                #print(Q_value_current)
-                input()
             
             machine_state_list=machine_state_list_new
             cred_state_list=cred_state_list_new
@@ -85,7 +82,6 @@ if __name__ == "__main__":
             if 0 in machine_has_compr_hop:
                 average_number+=i
                 times+=1
-                input()
                 break
 
     average_number=average_number/times
