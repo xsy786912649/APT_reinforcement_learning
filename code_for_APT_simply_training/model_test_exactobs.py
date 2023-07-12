@@ -22,7 +22,7 @@ def estimate_state(machine_state_list_belief_prability,cred_state_list_belief_pr
     
     return machine_state_list_estimated,cred_state_list_estimated
 
-def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_state_list_belief_prability,action_contain_list,observation_machine,obtained_cred_obervation,action_observation_list,observa_true):
+def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_state_list_belief_prability,action_contain_list,observation_machine,action_observation_list,observa_true):
     sampled_number=20
     machine_state_list_belief_prability_new=np.zeros_like(machine_state_list_belief_prability)
     cred_state_list_belief_prability_new=np.zeros_like(cred_state_list_belief_prability)
@@ -52,9 +52,6 @@ def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_st
             elif machine_state_list_belief_prability_new[i]>0.3:
                 machine_state_list_belief_prability_new[i]=0.3
 
-    for ele in obtained_cred_obervation[0]+obtained_cred_obervation[1]:
-        cred_state_list_belief_prability_new[cred_name_to_index(ele)]=1.0
-
     return machine_state_list_belief_prability_new, cred_state_list_belief_prability_new
 
 if __name__ == "__main__":
@@ -79,14 +76,14 @@ if __name__ == "__main__":
         for i in range(5000):
             machine_state_list_estimated=machine_state_list
             cred_state_list_estimated=cred_state_list
-            higher_state_current_machine,higher_state_current_cred=full_state_to_higher_state(machine_state_list_estimated,cred_state_list_estimated) 
-            current_valuedic_key=higher_state_to_valuedic_key(higher_state_current_machine,higher_state_current_cred) 
+            higher_state_current_machine=full_state_to_higher_state(machine_state_list_estimated) 
+            current_valuedic_key=higher_state_to_valuedic_key(higher_state_current_machine) 
 
             if current_valuedic_key in list(value_map_dict_further): 
                 Q_value_current=value_map_dict_further[current_valuedic_key] 
             else:
-                simplest_state_current_machine,simplest_state_current_cred=full_state_to_simplest_state(machine_state_list_estimated,cred_state_list_estimated)
-                current_valuedic_key=simplest_state_to_valuedic_key(simplest_state_current_machine,simplest_state_current_cred)
+                simplest_state_current_machine=full_state_to_simplest_state(machine_state_list_estimated)
+                current_valuedic_key=simplest_state_to_valuedic_key(simplest_state_current_machine)
                 Q_value_current=value_map_dict[current_valuedic_key]
 
             action_index=Q_value_current.index(max(Q_value_current)) 
