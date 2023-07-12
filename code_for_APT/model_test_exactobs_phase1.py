@@ -61,8 +61,6 @@ if __name__ == "__main__":
     with open(f'./model.pkl','rb') as f:
         value_map_dict=pickle.load(f)
 
-    with open(f'./model_phase2.pkl','rb') as f:
-        value_map_dict_further=pickle.load(f)
 
     average_number=0
     times=0
