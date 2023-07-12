@@ -24,12 +24,12 @@ if __name__ == "__main__":
 
     average_number=0
     times=0
-    for q in range(50):
+    for q in range(100):
         print("--------------------") 
         print(q)
 
         my_pomdp=POMDP()
-        machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp,seed=q%2+1)
+        machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp,seed=q)
         
         for i in range(5000):
             
