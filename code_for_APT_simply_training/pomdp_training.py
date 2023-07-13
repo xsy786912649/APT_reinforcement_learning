@@ -90,14 +90,16 @@ class POMDP_training:
                 if plan_compromise_machine in contain_machine_name_list:
                     continue
                 
-                using_cred=random.choice(available_cred)
+                using_cred=None
                 good_cred_list=list(self.node_dic[plan_compromise_machine])
                 available_cred_and_good=[cred for cred in available_cred if cred in good_cred_list]
 
-                if len(available_cred_and_good)==0:
-                    continue
-                else:
-                    using_cred=random.choice(available_cred_and_good)
+                #if len(available_cred_and_good)==0:
+                #    continue
+                #else:
+                #    using_cred=random.choice(available_cred_and_good)
+
+                using_cred=good_cred_list[0]
 
                 if using_cred not in good_cred_list:
                     continue

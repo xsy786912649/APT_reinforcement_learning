@@ -143,11 +143,11 @@ if __name__ == "__main__":
     value_map_dict = {}
     for i in range(pow(2,14)):
         value_map_dict[i]=[]
-        value_map_dict[i].append(-200.0)
+        value_map_dict[i].append(-20.0)
         for j in range(14):
-            value_map_dict[i].append(-200.0)
+            value_map_dict[i].append(-20.0)
             for k in range(j):
-                value_map_dict[i].append(-200.0)
+                value_map_dict[i].append(-20.0)
 
     for q in range(10000*10):
         print("--------------------") 
@@ -189,13 +189,13 @@ if __name__ == "__main__":
 
                 reward_safe=0.0
                 if 0 in machine_has_compr_hop_new:
-                    reward_safe=-5.0
+                    reward_safe=-1.0
                 reward_avai=float(len(action_contain_list))*(-0.1)
                 reward=reward_safe+reward_avai
                 if 0 not in machine_has_compr_hop_new:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+199.0/200*max(Q_value_new))
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+19.0/20*max(Q_value_new))
                 else:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward-195.0)
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward-19.0)
 
                 print(simplest_state_new_machine)
                 print(value_map_dict[current_valuedic_key][action_index])
