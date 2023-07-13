@@ -3,6 +3,7 @@ import numpy as np
 import pickle
 from pomdp import *
 from pomdp_training import *
+import os
 
 with open(f'./APT_data/hop.pickle','rb') as f:
     P0=pickle.load(f)
@@ -140,14 +141,18 @@ def random_attacker_start(my_pomdp, seed=None) :
 
 if __name__ == "__main__":
 
-    value_map_dict = {}
-    for i in range(pow(2,14)):
-        value_map_dict[i]=[]
-        value_map_dict[i].append(-20.0)
-        for j in range(14):
+    if os.path.exists('./model.pkl'):
+        with open(f'./model.pkl','rb') as f:
+            value_map_dict_further=pickle.load(f)
+    else:
+        value_map_dict = {}
+        for i in range(pow(2,14)):
+            value_map_dict[i]=[]
             value_map_dict[i].append(-20.0)
-            for k in range(j):
+            for j in range(14):
                 value_map_dict[i].append(-20.0)
+                for k in range(j):
+                    value_map_dict[i].append(-20.0)
 
     for q in range(10000*10):
         print("--------------------") 
