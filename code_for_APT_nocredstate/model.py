@@ -195,7 +195,7 @@ if __name__ == "__main__":
                 reward_safe=0.0
                 if 0 in machine_has_compr_hop_new:
                     reward_safe=-100.0
-                reward_avai=float(len(action_contain_list))*(-0.1)
+                reward_avai=float(len(action_contain_list))*(-0.001)
                 reward=reward_safe+reward_avai
                 if 0 not in machine_has_compr_hop_new:
                     value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+4999.0/5000*max(Q_value_new))
