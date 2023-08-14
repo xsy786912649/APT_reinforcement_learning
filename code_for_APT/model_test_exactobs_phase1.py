@@ -94,33 +94,34 @@ if __name__ == "__main__":
 
             new_machine_has_compr=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True]
             new_machine_has_compr_1hop=[(machine_name_to_index(me) in new_machine_has_compr) for me in hop_1]
-            print("current_state")
-            print(machine_has_compr_1hop)
-            print("next_state")
-            print(new_machine_has_compr_1hop)
-            print("action")
-            print([(machine_name_to_index(me) in action_contain_list) for me in hop_1])
+            #print("current_state")
+            #print(machine_has_compr_1hop)
+            #print("next_state")
+            #print(new_machine_has_compr_1hop)
+            #print("action")
+            #print([(machine_name_to_index(me) in action_contain_list) for me in hop_1])
             
             
             
             machine_state_list=machine_state_list_new
             cred_state_list=cred_state_list_new
 
-            print(i) 
+            #print(i) 
 
             total_iteration=total_iteration+1
             total_containing_number+=len(action_contain_list)
-            print("------------reminder_---------------")
-            print(str(times)+"/"+str(q))
-            if times>0:
-                print(1.0*average_number/times)
-            print("------------next____________")
+            #print("------------reminder_---------------")
+            #print(str(times)+"/"+str(q))
+            #if times>0:
+            #    print(1.0*average_number/times)
+            #print("------------next____________")
 
             machine_has_compr=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
             machine_has_compr_hop=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr] 
             if 0 in machine_has_compr_hop:
                 average_number+=i
                 times+=1
+                print(i)
                 break
 
     average_number=average_number/times
