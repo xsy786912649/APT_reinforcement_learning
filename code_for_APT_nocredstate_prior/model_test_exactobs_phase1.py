@@ -80,6 +80,7 @@ if __name__ == "__main__":
             if 0 in machine_has_compr_hop:
                 average_number+=i
                 times+=1
+                print(i)
                 break
 
     average_number=average_number/times
