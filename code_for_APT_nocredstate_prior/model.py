@@ -176,14 +176,14 @@ if __name__ == "__main__":
                 if np.random.rand(1)<eps:
                     action_index=random.randint(0, len(Q_value_current)-1)
                 else:
-                    action_index=Q_value_current.index(max(Q_value_current))
+                    action_contain_list1=[i for i in range(len(machine_state_list)) if machine_state_list[i]==True and machine_index_to_name(i) in hop_1] 
+                    if len(action_contain_list1)<3:
+                        action_contain_list=action_contain_list1
+                    else:
+                        action_contain_list=[action_contain_list1[0],action_contain_list1[1]]
+                    action_index=action_to_index(action_contain_list)
+                
                 action_contain_list=index_to_action(action_index)
-
-                action_contain_list1=[i for i in range(len(machine_state_list)) if machine_state_list[i]==True and machine_index_to_name(i) in hop_1] 
-                if len(action_contain_list1)<3:
-                    action_contain_list=action_contain_list1
-                else:
-                    action_contain_list=[action_contain_list1[0],action_contain_list1[1]]
 
             #state_transition
             machine_state_list_new,cred_state_list_new=my_pomdp.state_transition(machine_state_list,cred_state_list,action_contain_list)
