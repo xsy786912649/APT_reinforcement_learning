@@ -111,8 +111,8 @@ def random_attacker_start(my_pomdp, seed=None) :
 
     my_pomdp.reset()
     initial_compro_machine_index=random.randint(0, my_pomdp.machine_number-1)
-    while machine_index_to_name(initial_compro_machine_index) in N_hop[4]+N_hop[5]+N_hop[6]:
-        initial_compro_machine_index=random.randint(0, my_pomdp.machine_number-1)
+    #while machine_index_to_name(initial_compro_machine_index) in N_hop[5]+N_hop[6]:
+    #    initial_compro_machine_index=random.randint(0, my_pomdp.machine_number-1)
     avalible_cred_index=len(list(my_pomdp.node_dic[machine_index_to_name(initial_compro_machine_index)]))
     initial_using_cred_index=random.randint(0, avalible_cred_index-1)
     #print(initial_compro_machine_index,initial_using_cred_index)
@@ -150,11 +150,11 @@ if __name__ == "__main__":
         value_map_dict = {}
         for i in range(pow(2,14)):
             value_map_dict[i]=[]
-            value_map_dict[i].append(-5000.0)
+            value_map_dict[i].append(-2000.0)
             for j in range(14):
-                value_map_dict[i].append(-5000.0)
+                value_map_dict[i].append(-2000.0)
                 for k in range(j):
-                    value_map_dict[i].append(-5000.0)
+                    value_map_dict[i].append(-2000.0)
 
     for q in range(10000):
         print("--------------------") 
@@ -167,7 +167,7 @@ if __name__ == "__main__":
         action_index=0
         action_contain_list=[]
 
-        for i in range(5000):
+        for i in range(2000):
             #choose action based on eps-greedy policy
             simplest_state_current_machine=full_state_to_simplest_state(machine_state_list)
             current_valuedic_key=simplest_state_to_valuedic_key(simplest_state_current_machine)
@@ -196,13 +196,25 @@ if __name__ == "__main__":
 
                 reward_safe=0.0
                 if 0 in machine_has_compr_hop_new:
-                    reward_safe=-100.0
-                reward_avai=float(len(action_contain_list))*(-0.001)
+                    reward_safe=-50.0
+                reward_avai=False
+                if len(action_contain_list)==1:
+                    if machine_index_to_name(action_contain_list[0]) in hop_1:
+                        reward_avai=-10.0
+                    elif machine_index_to_name(action_contain_list[0]) in hop_2:
+                        reward_avai=-1.0
+                elif len(action_contain_list)==2:
+                    if (machine_index_to_name(action_contain_list[0]) in hop_1) and (machine_index_to_name(action_contain_list[1]) in hop_1):
+                        reward_avai=-2*10.0
+                    elif (machine_index_to_name(action_contain_list[0]) in hop_2) and (machine_index_to_name(action_contain_list[1]) in hop_2):
+                        reward_avai=-2.0
+                    else:
+                        reward_avai=-1.0-10.0
                 reward=reward_safe+reward_avai
                 if 0 not in machine_has_compr_hop_new:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+4999.0/5000*max(Q_value_new))
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+1999.0/2000*max(Q_value_new))
                 else:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward-4990.0)
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward-1990.0)
 
                 print(simplest_state_new_machine)
                 print(value_map_dict[current_valuedic_key][action_index])

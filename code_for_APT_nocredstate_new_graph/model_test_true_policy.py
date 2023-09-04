@@ -13,14 +13,10 @@ for index_machine in list(P0):
 target=N_hop[0]
 hop_1=N_hop[1]
 hop_2=N_hop[2]
+contain_hop=hop_2
 
 
 if __name__ == "__main__":
-    with open(f'./model.pkl','rb') as f:
-        value_map_dict=pickle.load(f)
-
-    with open(f'./model_phase2.pkl','rb') as f:
-        value_map_dict_further=pickle.load(f)
 
     average_number=0
     times=0
@@ -31,10 +27,10 @@ if __name__ == "__main__":
         my_pomdp=POMDP()
         machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp,seed=q)
         
-        for i in range(5000):
+        for i in range(2000):
             
 
-            action_contain_list1=[i for i in range(len(machine_state_list)) if machine_state_list[i]==True and machine_index_to_name(i) in hop_1] 
+            action_contain_list1=[i for i in range(len(machine_state_list)) if machine_state_list[i]==True and machine_index_to_name(i) in contain_hop] 
             if len(action_contain_list1)<3:
                 action_contain_list=action_contain_list1
             else:

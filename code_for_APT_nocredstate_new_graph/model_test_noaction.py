@@ -16,11 +16,6 @@ hop_2=N_hop[2]
 
 
 if __name__ == "__main__":
-    with open(f'./model.pkl','rb') as f:
-        value_map_dict=pickle.load(f)
-
-    with open(f'./model_phase2.pkl','rb') as f:
-        value_map_dict_further=pickle.load(f)
 
     average_number=0
     times=0
@@ -31,7 +26,7 @@ if __name__ == "__main__":
         my_pomdp=POMDP()
         machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp,seed=q)
         
-        for i in range(5000):
+        for i in range(2000):
             
             action_index=0
             #action_index=random.randint(0, 1+14+7*13-1)

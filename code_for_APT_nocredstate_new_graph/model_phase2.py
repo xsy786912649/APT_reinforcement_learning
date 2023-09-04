@@ -43,7 +43,7 @@ if __name__ == "__main__":
         action_index=0
         action_contain_list=[]
 
-        for i in range(5000):
+        for i in range(2000):
             #choose action based on eps-greedy policy
             higher_state_current_machine=full_state_to_higher_state(machine_state_list)
             current_valuedic_key=higher_state_to_valuedic_key(higher_state_current_machine)
@@ -81,13 +81,25 @@ if __name__ == "__main__":
                     
                 reward_safe=0.0
                 if 0 in machine_has_compr_hop_new:
-                    reward_safe=-100.0
-                reward_avai=float(len(action_contain_list))*(-0.001)
+                    reward_safe=-50.0
+                reward_avai=False
+                if len(action_contain_list)==1:
+                    if machine_index_to_name(action_contain_list[0]) in hop_1:
+                        reward_avai=-10.0
+                    elif machine_index_to_name(action_contain_list[0]) in hop_2:
+                        reward_avai=-1.0
+                elif len(action_contain_list)==2:
+                    if (machine_index_to_name(action_contain_list[0]) in hop_1) and (machine_index_to_name(action_contain_list[1]) in hop_1):
+                        reward_avai=-2*10.0
+                    elif (machine_index_to_name(action_contain_list[0]) in hop_2) and (machine_index_to_name(action_contain_list[1]) in hop_2):
+                        reward_avai=-2.0
+                    else:
+                        reward_avai=-1.0-10.0
                 reward=reward_safe+reward_avai
                 if 0 not in machine_has_compr_hop_new:
-                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward+4999.0/5000*max(Q_value_new))
+                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward+1999.0/2000*max(Q_value_new))
                 else:
-                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward-4990.0)
+                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward-1990.0)
 
                 print(higher_state_current_machine)
             
