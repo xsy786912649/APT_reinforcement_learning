@@ -142,7 +142,7 @@ def random_attacker_start(my_pomdp, seed=None) :
     return machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability 
 
 if __name__ == "__main__":
-
+    weight=10.0
     if os.path.exists('./model.pkl'):
         with open(f'./model.pkl','rb') as f:
             value_map_dict=pickle.load(f)
@@ -200,16 +200,16 @@ if __name__ == "__main__":
                 reward_avai=False
                 if len(action_contain_list)==1:
                     if machine_index_to_name(action_contain_list[0]) in hop_1:
-                        reward_avai=-10.0
+                        reward_avai=-weight
                     elif machine_index_to_name(action_contain_list[0]) in hop_2:
                         reward_avai=-1.0
                 elif len(action_contain_list)==2:
                     if (machine_index_to_name(action_contain_list[0]) in hop_1) and (machine_index_to_name(action_contain_list[1]) in hop_1):
-                        reward_avai=-2*10.0
+                        reward_avai=-2*weight
                     elif (machine_index_to_name(action_contain_list[0]) in hop_2) and (machine_index_to_name(action_contain_list[1]) in hop_2):
                         reward_avai=-2.0
                     else:
-                        reward_avai=-1.0-10.0
+                        reward_avai=-1.0-weight
                 reward=reward_safe+reward_avai
                 if 0 not in machine_has_compr_hop_new:
                     value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+1999.0/2000*max(Q_value_new))
@@ -233,7 +233,7 @@ if __name__ == "__main__":
                 print(value_map_dict[current_valuedic_key])
                 break
 
-    f_save=open("model.pkl",'wb')
+    f_save=open("model_"+str(weight)+".pkl",'wb')
     pickle.dump(value_map_dict,f_save)
     f_save.close()
     

@@ -23,11 +23,12 @@ def higher_state_to_valuedic_key(higher_state_current_machine):
     return tuple(higher_state_current_machine)
 
 if __name__ == "__main__":
-    with open(f'./model.pkl','rb') as f:
+    weight=10.0
+    with open(f"./model_"+str(weight)+".pkl",'rb') as f:
         value_map_dict=pickle.load(f)
 
-    if os.path.exists('./model_phase2.pkl'):
-        with open(f'./model_phase2.pkl','rb') as f:
+    if os.path.exists("./model_phase2_"+str(weight)+".pkl"):
+        with open(f"./model_phase2_"+str(weight)+".pkl",'rb') as f:
             value_map_dict_further=pickle.load(f)
     else:
         value_map_dict_further={}
@@ -85,16 +86,16 @@ if __name__ == "__main__":
                 reward_avai=False
                 if len(action_contain_list)==1:
                     if machine_index_to_name(action_contain_list[0]) in hop_1:
-                        reward_avai=-10.0
+                        reward_avai=-weight
                     elif machine_index_to_name(action_contain_list[0]) in hop_2:
                         reward_avai=-1.0
                 elif len(action_contain_list)==2:
                     if (machine_index_to_name(action_contain_list[0]) in hop_1) and (machine_index_to_name(action_contain_list[1]) in hop_1):
-                        reward_avai=-2*10.0
+                        reward_avai=-2*weight
                     elif (machine_index_to_name(action_contain_list[0]) in hop_2) and (machine_index_to_name(action_contain_list[1]) in hop_2):
                         reward_avai=-2.0
                     else:
-                        reward_avai=-1.0-10.0
+                        reward_avai=-1.0-weight
                 reward=reward_safe+reward_avai
                 if 0 not in machine_has_compr_hop_new:
                     value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward+1999.0/2000*max(Q_value_new))
@@ -119,6 +120,6 @@ if __name__ == "__main__":
             #print(full_state_to_higher_state(machine_state_list,cred_state_list))
 
         if q%100==0:
-            f_save=open("model_phase2.pkl",'wb')
+            f_save=open("model_phase2_"+str(weight)+".pkl",'wb')
             pickle.dump(value_map_dict_further,f_save)
             f_save.close()

@@ -18,9 +18,9 @@ hop_3=N_hop[3]
 
 
 if __name__ == "__main__":
-    with open(f'./model.pkl','rb') as f:
+    weight=10.0
+    with open(f"./model_"+str(weight)+".pkl",'rb') as f:
         value_map_dict=pickle.load(f)
-
 
     average_number=0
     times=0

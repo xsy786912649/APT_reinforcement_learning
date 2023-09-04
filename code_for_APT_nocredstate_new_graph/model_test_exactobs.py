@@ -55,10 +55,11 @@ def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_st
     return machine_state_list_belief_prability_new, cred_state_list_belief_prability_new
 
 if __name__ == "__main__":
-    with open(f'./model.pkl','rb') as f:
+    weight=10.0
+    with open(f"./model_"+str(weight)+".pkl",'rb') as f:
         value_map_dict=pickle.load(f)
 
-    with open(f'./model_phase2.pkl','rb') as f:
+    with open(f"./model_phase2_"+str(weight)+".pkl",'rb') as f:
         value_map_dict_further=pickle.load(f)
 
     average_number=0
