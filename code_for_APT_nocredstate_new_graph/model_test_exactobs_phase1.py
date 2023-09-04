@@ -4,6 +4,7 @@ import pickle
 from pomdp import *
 from model import *
 from model_phase2 import * 
+import sys
 
 with open(f'./APT_data/hop.pickle','rb') as f:
     P0=pickle.load(f)
@@ -16,9 +17,8 @@ hop_2=N_hop[2]
 hop_3=N_hop[3]
 
 
-
 if __name__ == "__main__":
-    weight=10.0
+    weight = float(sys.argv[1]) #10.0
     with open(f"./model_"+str(weight)+".pkl",'rb') as f:
         value_map_dict=pickle.load(f)
 

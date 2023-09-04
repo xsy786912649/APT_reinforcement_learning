@@ -5,6 +5,7 @@ from pomdp import *
 from model import *
 import os
 import copy
+import sys
 
 with open(f'./APT_data/hop.pickle','rb') as f:
     P0=pickle.load(f)
@@ -23,7 +24,8 @@ def higher_state_to_valuedic_key(higher_state_current_machine):
     return tuple(higher_state_current_machine)
 
 if __name__ == "__main__":
-    weight=10.0
+    weight = float(sys.argv[1]) #10.0 
+    base_penalty= float(sys.argv[2])
     with open(f"./model_"+str(weight)+".pkl",'rb') as f:
         value_map_dict=pickle.load(f)
 
@@ -33,7 +35,7 @@ if __name__ == "__main__":
     else:
         value_map_dict_further={}
 
-    for q in range(10000):
+    for q in range(20000):
         print("--------------------") 
         print(q)
 
@@ -88,14 +90,14 @@ if __name__ == "__main__":
                     if machine_index_to_name(action_contain_list[0]) in hop_1:
                         reward_avai=-weight
                     elif machine_index_to_name(action_contain_list[0]) in hop_2:
-                        reward_avai=-1.0
+                        reward_avai=-base_penalty
                 elif len(action_contain_list)==2:
                     if (machine_index_to_name(action_contain_list[0]) in hop_1) and (machine_index_to_name(action_contain_list[1]) in hop_1):
                         reward_avai=-2*weight
                     elif (machine_index_to_name(action_contain_list[0]) in hop_2) and (machine_index_to_name(action_contain_list[1]) in hop_2):
-                        reward_avai=-2.0
+                        reward_avai=-2*base_penalty
                     else:
-                        reward_avai=-1.0-weight
+                        reward_avai=-base_penalty-weight
                 reward=reward_safe+reward_avai
                 if 0 not in machine_has_compr_hop_new:
                     value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward+1999.0/2000*max(Q_value_new))

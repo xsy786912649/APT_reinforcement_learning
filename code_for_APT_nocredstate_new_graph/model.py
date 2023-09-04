@@ -3,6 +3,7 @@ import numpy as np
 import pickle
 from pomdp import *
 import os
+import sys
 
 with open(f'./APT_data/hop.pickle','rb') as f:
     P0=pickle.load(f)
@@ -142,9 +143,10 @@ def random_attacker_start(my_pomdp, seed=None) :
     return machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability 
 
 if __name__ == "__main__":
-    weight=10.0
-    if os.path.exists('./model.pkl'):
-        with open(f'./model.pkl','rb') as f:
+    weight = float(sys.argv[1]) #10.0
+    base_penalty= float(sys.argv[2])
+    if os.path.exists("./model_"+str(weight)+".pkl"):
+        with open(f"./model_"+str(weight)+".pkl",'rb') as f:
             value_map_dict=pickle.load(f)
     else:
         value_map_dict = {}
@@ -156,7 +158,7 @@ if __name__ == "__main__":
                 for k in range(j):
                     value_map_dict[i].append(-2000.0)
 
-    for q in range(10000):
+    for q in range(20000):
         print("--------------------") 
         print(q)
 
@@ -202,14 +204,14 @@ if __name__ == "__main__":
                     if machine_index_to_name(action_contain_list[0]) in hop_1:
                         reward_avai=-weight
                     elif machine_index_to_name(action_contain_list[0]) in hop_2:
-                        reward_avai=-1.0
+                        reward_avai=-base_penalty
                 elif len(action_contain_list)==2:
                     if (machine_index_to_name(action_contain_list[0]) in hop_1) and (machine_index_to_name(action_contain_list[1]) in hop_1):
                         reward_avai=-2*weight
                     elif (machine_index_to_name(action_contain_list[0]) in hop_2) and (machine_index_to_name(action_contain_list[1]) in hop_2):
-                        reward_avai=-2.0
+                        reward_avai=-2*base_penalty
                     else:
-                        reward_avai=-1.0-weight
+                        reward_avai=-base_penalty-weight
                 reward=reward_safe+reward_avai
                 if 0 not in machine_has_compr_hop_new:
                     value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+1999.0/2000*max(Q_value_new))
