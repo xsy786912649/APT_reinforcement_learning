@@ -17,7 +17,7 @@ hop_3=N_hop[3]
 contain_hop=hop_1+hop_2
 my_pomdp1=POMDP()
 
-eps=0.3
+eps=0.5
 lr=0.5
 
 def index_to_action(index):
