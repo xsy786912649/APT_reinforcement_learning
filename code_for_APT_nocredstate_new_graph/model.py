@@ -17,7 +17,7 @@ hop_3=N_hop[3]
 contain_hop=hop_1+hop_2
 my_pomdp1=POMDP()
 
-eps=0.5
+eps=0.3
 lr=0.5
 
 def index_to_action(index):
@@ -158,7 +158,7 @@ if __name__ == "__main__":
                 for k in range(j):
                     value_map_dict[i].append(-2000.0)
 
-    for q in range(40000):
+    for q in range(10000):
         print("--------------------") 
         print(q)
 

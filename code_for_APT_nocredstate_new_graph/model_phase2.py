@@ -17,7 +17,7 @@ hop_1=N_hop[1]
 hop_2=N_hop[2]
 my_pomdp1=POMDP()
 
-eps=0.5
+eps=0.3
 lr=0.5
 
 def higher_state_to_valuedic_key(higher_state_current_machine):
