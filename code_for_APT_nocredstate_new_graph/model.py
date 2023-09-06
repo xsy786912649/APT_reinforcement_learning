@@ -158,7 +158,7 @@ if __name__ == "__main__":
                 for k in range(j):
                     value_map_dict[i].append(-2000.0)
 
-    for q in range(10000):
+    for q in range(40000):
         print("--------------------") 
         print(q)
 
@@ -216,7 +216,7 @@ if __name__ == "__main__":
                 if 0 not in machine_has_compr_hop_new:
                     value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+1999.0/2000*max(Q_value_new))
                 else:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward-1990.0)
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward-2000.0)
 
                 print(simplest_state_new_machine)
                 print(value_map_dict[current_valuedic_key][action_index])
