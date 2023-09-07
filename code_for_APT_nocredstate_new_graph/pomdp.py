@@ -140,12 +140,12 @@ class POMDP:
                             obtained_cred_this_machine.append(cred_index_to_name(index))
                     elif using_cred in self.middle_level_credential_list:
                         for index in may_obtain_cred_index:
-                            if np.random.rand(1)<0.7:
+                            if np.random.rand(1)<1.0:#0.7:
                                 cred_state_list[index]=True
                                 obtained_cred_this_machine.append(cred_index_to_name(index))
                     elif using_cred in self.lowest_level_credential_list:
                         for index in may_obtain_cred_index:
-                            if np.random.rand(1)<0.4:
+                            if np.random.rand(1)<1.0:#0.4:
                                 cred_state_list[index]=True
                                 obtained_cred_this_machine.append(cred_index_to_name(index))
                                 
@@ -196,12 +196,12 @@ class POMDP:
                             obtained_cred_this_machine.append(cred_index_to_name(index))
                     elif using_cred in self.middle_level_credential_list:
                         for index in may_obtain_cred_index:
-                            if np.random.rand(1)<0.7:
+                            if np.random.rand(1)<1.0:#0.7:
                                 cred_state_list[index]=True
                                 obtained_cred_this_machine.append(cred_index_to_name(index))
                     elif using_cred in self.lowest_level_credential_list:
                         for index in may_obtain_cred_index:
-                            if np.random.rand(1)<0.4:
+                            if np.random.rand(1)<1.0:#0.4:
                                 cred_state_list[index]=True
                                 obtained_cred_this_machine.append(cred_index_to_name(index))
 
