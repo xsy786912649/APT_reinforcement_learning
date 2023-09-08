@@ -123,10 +123,10 @@ if __name__ == "__main__":
             value_map_dict=pickle.load(f)
     else:
         value_map_dict = {}
-        for i in range(pow(2,14)):
+        for i in range(pow(2,len(contain_hop))):
             value_map_dict[i]=[]
             value_map_dict[i].append(-2000.0)
-            for j in range(14):
+            for j in range(len(contain_hop)):
                 value_map_dict[i].append(-2000.0)
                 for k in range(j):
                     value_map_dict[i].append(-2000.0)
