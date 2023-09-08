@@ -30,7 +30,7 @@ if __name__ == "__main__":
         
         for i in range(2000):
             
-            action_index=random.randint(0, 1+14+7*13-1)
+            action_index=random.randint(0, 1+12+6*11-1)
             action_contain_list=index_to_action(action_index)
 
             #state_transition

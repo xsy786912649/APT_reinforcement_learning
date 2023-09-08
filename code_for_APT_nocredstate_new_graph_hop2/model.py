@@ -14,7 +14,7 @@ target=N_hop[0]
 hop_1=N_hop[1]
 hop_2=N_hop[2]
 hop_3=N_hop[3]
-contain_hop=hop_2+hop_3[0:2]
+contain_hop=hop_2
 my_pomdp1=POMDP()
 
 eps=0.3
@@ -23,48 +23,21 @@ lr=0.5
 def index_to_action(index):
     if index==0:
         return []
-    elif index>=1 and index<=14:
+    elif index>=1 and index<=len(contain_hop):
         return [machine_name_to_index(contain_hop[index-1])]
-    elif index>14:
-        if index-14<=13:
-            a1=0
-            b1=index-14
-        elif index-14-13<=12:
-            a1=1
-            b1=index-14-13+a1
-        elif index-14-13-12<=11:
-            a1=2
-            b1=index-14-13-12+a1
-        elif index-14-13-12-11<=10:
-            a1=3
-            b1=index-14-13-12-11+a1
-        elif index-14-13-12-11-10<=9:
-            a1=4
-            b1=index-14-13-12-11-10+a1
-        elif index-14-13-12-11-10-9<=8:
-            a1=5
-            b1=index-14-13-12-11-10-9+a1
-        elif index-14-13-12-11-10-9-8<=7:
-            a1=6
-            b1=index-14-13-12-11-10-9-8+a1
-        elif index-14-13-12-11-10-9-8-7<=6:
-            a1=7
-            b1=index-14-13-12-11-10-9-8-7+a1
-        elif index-14-13-12-11-10-9-8-7-6<=5:
-            a1=8
-            b1=index-14-13-12-11-10-9-8-7-6+a1
-        elif index-14-13-12-11-10-9-8-7-6-5<=4:
-            a1=9
-            b1=index-14-13-12-11-10-9-8-7-6-5+a1
-        elif index-14-13-12-11-10-9-8-7-6-5-4<=3:
-            a1=10
-            b1=index-14-13-12-11-10-9-8-7-6-5-4+a1
-        elif index-14-13-12-11-10-9-8-7-6-5-4-3<=2:
-            a1=11
-            b1=index-14-13-12-11-10-9-8-7-6-5-4-3+a1
-        elif index-14-13-12-11-10-9-8-7-6-5-4-3-2<=1:
-            a1=12
-            b1=index-14-13-12-11-10-9-8-7-6-5-4-3-2+a1
+    elif index>len(contain_hop):
+        index_temp=index-len(contain_hop)
+        i=len(contain_hop)
+        k=0
+        while 1:
+            if index_temp<=i-1:
+                a1=k
+                b1=index_temp+a1
+                break
+            else:
+                index_temp=index_temp-(i-1)
+                i=i-1
+                k=k+1
         a=machine_name_to_index(contain_hop[a1])
         b=machine_name_to_index(contain_hop[b1])
         return [a,b]
@@ -80,9 +53,9 @@ def action_to_index(action):
         a=contain_hop.index(machine_index_to_name(action[0]))
         b=contain_hop.index(machine_index_to_name(action[1]))
         if a<b:
-            return int(a*(25-a)/2+b+14) 
+            return int(a*(len(contain_hop)+len(contain_hop)-3-a)/2+b+len(contain_hop)) 
         else: 
-            return int(b*(25-b)/2+a+14) 
+            return int(b*(len(contain_hop)+len(contain_hop)-3-b)/2+a+len(contain_hop)) 
 
 def full_state_to_simplest_state(machine_state_list):
     machine_has_compr_name=[machine_index_to_name(index) for index in range(len(machine_state_list)) if machine_state_list[index]==True] 
