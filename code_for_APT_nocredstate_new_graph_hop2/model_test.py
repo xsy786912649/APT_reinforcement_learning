@@ -18,13 +18,13 @@ hop_3=N_hop[3]
 
 def estimate_state(machine_state_list_belief_prability,cred_state_list_belief_prability):
     
-    machine_state_list_estimated= [probability>0.81 for probability in machine_state_list_belief_prability]
-    cred_state_list_estimated=[probability>0.81 for probability in cred_state_list_belief_prability]
+    machine_state_list_estimated= [probability>0.7 for probability in machine_state_list_belief_prability]
+    cred_state_list_estimated=[probability>0.6 for probability in cred_state_list_belief_prability]
     
     return machine_state_list_estimated,cred_state_list_estimated
 
 def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_state_list_belief_prability,action_contain_list,observation_machine,action_observation_list,observa_true):
-    sampled_number=20
+    sampled_number=100
     machine_state_list_belief_prability_new=np.zeros_like(machine_state_list_belief_prability)
     cred_state_list_belief_prability_new=np.zeros_like(cred_state_list_belief_prability)
     i=0
@@ -42,14 +42,14 @@ def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_st
             machine_state_list_belief_prability_new[i]=1.0
 
         elif machine_index_to_name(i) in hop_1+hop_2+hop_3: 
-            if machine_state_list_belief_prability_new[i]<0.03:
-                machine_state_list_belief_prability_new[i]=0.03
+            if machine_state_list_belief_prability_new[i]<0.01:
+                machine_state_list_belief_prability_new[i]=0.01
             elif machine_state_list_belief_prability_new[i]>0.8:
                 machine_state_list_belief_prability_new[i]=0.8
 
         else: 
-            if machine_state_list_belief_prability_new[i]<0.03:
-                machine_state_list_belief_prability_new[i]=0.03
+            if machine_state_list_belief_prability_new[i]<0.01:
+                machine_state_list_belief_prability_new[i]=0.01
             elif machine_state_list_belief_prability_new[i]>0.3:
                 machine_state_list_belief_prability_new[i]=0.3
 
