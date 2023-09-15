@@ -18,8 +18,8 @@ hop_3=N_hop[3]
 
 def estimate_state(machine_state_list_belief_prability,cred_state_list_belief_prability):
     
-    machine_state_list_estimated= [probability>0.6 for probability in machine_state_list_belief_prability]
-    cred_state_list_estimated=[probability>0.6 for probability in cred_state_list_belief_prability]
+    machine_state_list_estimated= [probability>0.81 for probability in machine_state_list_belief_prability]
+    cred_state_list_estimated=[probability>0.81 for probability in cred_state_list_belief_prability]
     
     return machine_state_list_estimated,cred_state_list_estimated
 
@@ -41,7 +41,7 @@ def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_st
         if i in observa_true:
             machine_state_list_belief_prability_new[i]=1.0
 
-        elif machine_index_to_name(i) in N_hop[1]+N_hop[2]+ N_hop[3]: 
+        elif machine_index_to_name(i) in hop_1+hop_2+hop_3: 
             if machine_state_list_belief_prability_new[i]<0.03:
                 machine_state_list_belief_prability_new[i]=0.03
             elif machine_state_list_belief_prability_new[i]>0.8:
@@ -97,7 +97,7 @@ if __name__ == "__main__":
             machine_state_list=machine_state_list_new
             cred_state_list=cred_state_list_new
 
-            observation_list=[machine_name_to_index(ele) for ele in N_hop[1]+N_hop[2]+N_hop[3]]
+            observation_list=[machine_name_to_index(ele) for ele in hop_1+hop_2+hop_3]
             action_observation_list=random.sample(observation_list,2)
 
             observation_machine=my_pomdp.state_observation(machine_state_list,action_observation_list) 
@@ -114,7 +114,7 @@ if __name__ == "__main__":
             machine_state_list_belief_prability,cred_state_list_belief_prability=belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_state_list_belief_prability,action_contain_list,observation_machine,action_observation_list,observation_true_list)
     
             #print(machine_state_list_belief_prability)
-            #print([machine_state_list_belief_prability[i] for i in range(len(machine_state_list_belief_prability)) if machine_index_to_name(i) in N_hop[1]+N_hop[2]+N_hop[3]])
+            #print([machine_state_list_belief_prability[i] for i in range(len(machine_state_list_belief_prability)) if machine_index_to_name(i) in hop_1+hop_2+hop_3])
             print(machine_state_list_belief_prability[action_observation_list[0]],machine_state_list_belief_prability[action_observation_list[1]])
             print(i) 
             total_iteration=total_iteration+1
