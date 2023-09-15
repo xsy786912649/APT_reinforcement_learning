@@ -85,8 +85,8 @@ def random_attacker_start(my_pomdp, seed=None) :
 
     my_pomdp.reset()
     initial_compro_machine_index=random.randint(0, my_pomdp.machine_number-1)
-    #while machine_index_to_name(initial_compro_machine_index) in N_hop[5]+N_hop[6]:
-    #    initial_compro_machine_index=random.randint(0, my_pomdp.machine_number-1)
+    while machine_index_to_name(initial_compro_machine_index) in N_hop[0]+N_hop[1]:
+        initial_compro_machine_index=random.randint(0, my_pomdp.machine_number-1)
     avalible_cred_index=len(list(my_pomdp.node_dic[machine_index_to_name(initial_compro_machine_index)]))
     initial_using_cred_index=random.randint(0, avalible_cred_index-1)
     #print(initial_compro_machine_index,initial_using_cred_index)
