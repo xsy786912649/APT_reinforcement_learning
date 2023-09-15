@@ -18,8 +18,8 @@ hop_3=N_hop[3]
 
 def estimate_state(machine_state_list_belief_prability,cred_state_list_belief_prability):
     
-    machine_state_list_estimated= [probability>0.6 for probability in machine_state_list_belief_prability]
-    cred_state_list_estimated=[probability>0.6 for probability in cred_state_list_belief_prability]
+    machine_state_list_estimated= [probability>0.81 for probability in machine_state_list_belief_prability]
+    cred_state_list_estimated=[probability>0.81 for probability in cred_state_list_belief_prability]
     
     return machine_state_list_estimated,cred_state_list_estimated
 
@@ -44,8 +44,8 @@ def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_st
         elif machine_index_to_name(i) in hop_1+hop_2+hop_3: 
             if machine_state_list_belief_prability_new[i]<0.01:
                 machine_state_list_belief_prability_new[i]=0.01
-            elif machine_state_list_belief_prability_new[i]>0.5:
-                machine_state_list_belief_prability_new[i]=0.5
+            elif machine_state_list_belief_prability_new[i]>0.8:
+                machine_state_list_belief_prability_new[i]=0.8
 
         else: 
             if machine_state_list_belief_prability_new[i]<0.01:
