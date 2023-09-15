@@ -220,6 +220,9 @@ class POMDP:
         return
 
 
+if __name__ == "__main__":
+    my_pomdp=POMDP()
+
 """
 if __name__ == "__main__":
     my_pomdp=POMDP()
