@@ -18,7 +18,7 @@ hop_3=N_hop[3]
 
 def estimate_state(machine_state_list_belief_prability,cred_state_list_belief_prability):
     
-    machine_state_list_estimated= [probability>0.81 for probability in machine_state_list_belief_prability]
+    machine_state_list_estimated= [probability>0.79 for probability in machine_state_list_belief_prability]
     cred_state_list_estimated=[probability>0.81 for probability in cred_state_list_belief_prability]
     
     return machine_state_list_estimated,cred_state_list_estimated
