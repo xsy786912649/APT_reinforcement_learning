@@ -14,6 +14,7 @@ target=N_hop[0]
 hop_1=N_hop[1]
 hop_2=N_hop[2]
 hop_3=N_hop[3]
+contain_hop=hop_2
 
 print([len(N_hop[i]) for i in range(7)])
 
@@ -29,8 +30,8 @@ if __name__ == "__main__":
         machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp,seed=q)
         
         for i in range(2000):
-            
-            action_index=random.randint(0, 1+12+6*11-1)
+            n=len(contain_hop)
+            action_index=random.randint(0, 1+n+n*(n-1)/2-1)
             action_contain_list=index_to_action(action_index)
 
             #state_transition

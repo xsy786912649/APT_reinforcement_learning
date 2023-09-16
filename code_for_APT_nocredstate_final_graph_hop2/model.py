@@ -15,6 +15,7 @@ hop_1=N_hop[1]
 hop_2=N_hop[2]
 hop_3=N_hop[3]
 contain_hop=hop_2
+attention_hop=hop_1+hop_2+hop_3
 my_pomdp1=POMDP()
 
 #print([len(el) for el in N_hop])
@@ -67,7 +68,6 @@ def full_state_to_simplest_state(machine_state_list):
     return machine_simplest_state
 
 def full_state_to_higher_state(machine_state_list):
-    attention_hop=hop_1+hop_2+hop_3
     machine_has_compr_name=[machine_index_to_name(index) for index in range(len(machine_state_list)) if machine_state_list[index]==True] 
     machine_higher_state=[(attention_hop[i] in machine_has_compr_name) for i in range(len(attention_hop))]
 
