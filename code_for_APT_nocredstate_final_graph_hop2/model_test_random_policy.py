@@ -14,7 +14,7 @@ target=N_hop[0]
 hop_1=N_hop[1]
 hop_2=N_hop[2]
 hop_3=N_hop[3]
-contain_hop=hop_2
+contain_hop=hop_1
 
 print([len(N_hop[i]) for i in range(7)])
 
