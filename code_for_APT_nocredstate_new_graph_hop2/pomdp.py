@@ -49,8 +49,7 @@ class POMDP:
         with open(f'./APT_data/network_topo.gpickle','rb') as f:
             self.G=pickle.load(f)
         self.node_dic=self.G.nodes
-        self.machine_list=list(self.node_dic)
-        self.machine_number=len(self.machine_list)
+        self.machine_number=len(All_machine)
 
         self.stored_cred=[]
         with open(f'./APT_data/comp_cred.pickle','rb') as f:
@@ -113,7 +112,7 @@ class POMDP:
 
         for n in range(len(machine_state_list)):
             if machine_state_list[n]==True and (n not in action_contain_list):
-                neighbors_of_n_list=list(self.G.neighbors(self.machine_list[n]))
+                neighbors_of_n_list=list(self.G.neighbors(machine_index_to_name(n)))
                 neighbors_of_n_list_noncompromised=[machine for machine in neighbors_of_n_list if machine_state_list[machine_name_to_index(machine)]==False]
                 potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
                 if potential_plan_compromise_list==[]:
@@ -169,7 +168,7 @@ class POMDP:
 
         for n in range(len(machine_state_list)):
             if machine_state_list[n]==True and (n not in action_contain_list):
-                neighbors_of_n_list=list(self.G.neighbors(self.machine_list[n]))
+                neighbors_of_n_list=list(self.G.neighbors(machine_index_to_name(n)))
                 neighbors_of_n_list_noncompromised=[machine for machine in neighbors_of_n_list if machine_state_list[machine_name_to_index(machine)]==False]
                 potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
                 if potential_plan_compromise_list==[]:

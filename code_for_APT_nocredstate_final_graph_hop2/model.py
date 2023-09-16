@@ -17,6 +17,9 @@ hop_3=N_hop[3]
 contain_hop=hop_2
 my_pomdp1=POMDP()
 
+#print([len(el) for el in N_hop])
+#input()
+
 eps=0.3
 lr=0.5
 

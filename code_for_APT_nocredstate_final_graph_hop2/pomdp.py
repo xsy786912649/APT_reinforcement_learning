@@ -12,6 +12,13 @@ for index_machine in list(P0):
     N_hop[int(P0[index_machine])].append(index_machine)
 All_machine=N_hop[0]+N_hop[1]+N_hop[2]+N_hop[3]+N_hop[4]+N_hop[5]+N_hop[6]
 
+All_cred=[]
+with open(f'./APT_data/comp_cred.pickle','rb') as f:
+    P0=pickle.load(f)
+for index_machine in list(P0):
+    All_cred.extend(P0[index_machine] )
+All_cred=list(set(All_cred))
+
 def machine_index_to_name(index):
     return All_machine[index]
 
@@ -19,10 +26,10 @@ def machine_name_to_index(name):
     return All_machine.index(name)
 
 def cred_name_to_index(name):
-    return int(name[4:])
+    return All_cred.index(name)
 
-def cred_index_to_name(name):
-    return 'cred'+str(name)
+def cred_index_to_name(index):
+    return All_cred[index]
 
 def is_number(s):
     try:
@@ -49,28 +56,10 @@ class POMDP:
         with open(f'./APT_data/network_topo.gpickle','rb') as f:
             self.G=pickle.load(f)
         self.node_dic=self.G.nodes
-        self.machine_list=list(self.node_dic)
-        self.machine_number=len(self.machine_list)
-
-        self.stored_cred=[]
-        with open(f'./APT_data/comp_cred.pickle','rb') as f:
-            P0=pickle.load(f)
-        for index_machine in list(P0):
-            self.stored_cred.append(P0[index_machine] )
-
-        with open(f'./APT_data/highest_level_credential.pickle','rb') as f:
-            P0=pickle.load(f)
-        self.highest_level_credential_list=list(P0)
-        with open(f'./APT_data/lowest_level_credential.pickle','rb') as f:
-            P0=pickle.load(f)
-        self.lowest_level_credential_list=list(P0)
-        with open(f'./APT_data/middle_level_credential.pickle','rb') as f:
-            P0=pickle.load(f)
-        self.middle_level_credential_list=list(P0)
-
-        credential_list=self.highest_level_credential_list+self.middle_level_credential_list+self.lowest_level_credential_list
-        credential_list.sort(key=lambda x: int(x[4:]))
-        self.credential_number=len(credential_list)
+        #print(self.node_dic['Comp735514'])
+        #input()
+        self.credential_number=len(All_cred)
+        self.machine_number=len(All_machine)
         #print(self.machine_number)
         #print(self.credential_number)
 
@@ -86,14 +75,6 @@ class POMDP:
         if not action_observation_list == []:
             assert is_number(action_observation_list[0])
         observation_machine=[machine_state_list[machine_index] for machine_index in action_observation_list]
-
-        #obtained_cred_obervation=[]
-        #using_cred_obervation=[]
-        #non_obtained_cred_observation=[]
-        #for machine_index in action_observation_list:
-        #    obtained_cred_obervation.append(list(set(self.obtained_cred[machine_index])))
-        #    using_cred_obervation.append(list(set(self.using_cred_stored[machine_index])))
-        #    non_obtained_cred_observation.append([cred for cred in self.stored_cred[machine_index] if cred not in self.obtained_cred[machine_index]])
 
         return observation_machine
 
@@ -113,19 +94,19 @@ class POMDP:
 
         for n in range(len(machine_state_list)):
             if machine_state_list[n]==True and (n not in action_contain_list):
-                neighbors_of_n_list=list(self.G.neighbors(self.machine_list[n]))
+                neighbors_of_n_list=list(self.G.neighbors(machine_index_to_name(n)))
                 neighbors_of_n_list_noncompromised=[machine for machine in neighbors_of_n_list if machine_state_list[machine_name_to_index(machine)]==False]
                 potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
                 if potential_plan_compromise_list==[]:
                     continue
-
+                
                 plan_compromise_machine=random.choice(potential_plan_compromise_list)
-
                 if plan_compromise_machine in contain_machine_name_list:
                     continue
 
                 using_cred=random.choice(available_cred)
                 good_cred_list=list(self.node_dic[plan_compromise_machine])
+
                 if using_cred not in good_cred_list:
                     continue
                 elif using_cred in good_cred_list:
@@ -134,20 +115,9 @@ class POMDP:
                     may_obtain_cred_index=[cred_name_to_index(cred_name) for cred_name in may_obtain_cred]
 
                     obtained_cred_this_machine=[]
-                    if using_cred in self.highest_level_credential_list:
-                        for index in may_obtain_cred_index:
-                            cred_state_list[index]=True
-                            obtained_cred_this_machine.append(cred_index_to_name(index))
-                    elif using_cred in self.middle_level_credential_list:
-                        for index in may_obtain_cred_index:
-                            if np.random.rand(1)<1.0:#0.7:
-                                cred_state_list[index]=True
-                                obtained_cred_this_machine.append(cred_index_to_name(index))
-                    elif using_cred in self.lowest_level_credential_list:
-                        for index in may_obtain_cred_index:
-                            if np.random.rand(1)<1.0:#0.4:
-                                cred_state_list[index]=True
-                                obtained_cred_this_machine.append(cred_index_to_name(index))
+                    for index in may_obtain_cred_index:
+                        cred_state_list[index]=True
+                        obtained_cred_this_machine.append(cred_index_to_name(index))
                                 
                     self.using_cred_stored[machine_name_to_index(plan_compromise_machine)].append(using_cred)
                     self.obtained_cred[machine_name_to_index(plan_compromise_machine)].extend(copy.deepcopy(obtained_cred_this_machine))
@@ -169,7 +139,7 @@ class POMDP:
 
         for n in range(len(machine_state_list)):
             if machine_state_list[n]==True and (n not in action_contain_list):
-                neighbors_of_n_list=list(self.G.neighbors(self.machine_list[n]))
+                neighbors_of_n_list=list(self.G.neighbors(machine_index_to_name(n)))
                 neighbors_of_n_list_noncompromised=[machine for machine in neighbors_of_n_list if machine_state_list[machine_name_to_index(machine)]==False]
                 potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
                 if potential_plan_compromise_list==[]:
@@ -190,20 +160,9 @@ class POMDP:
                     may_obtain_cred_index=[cred_name_to_index(cred_name) for cred_name in may_obtain_cred]
 
                     obtained_cred_this_machine=[]
-                    if using_cred in self.highest_level_credential_list:
-                        for index in may_obtain_cred_index:
-                            cred_state_list[index]=True
-                            obtained_cred_this_machine.append(cred_index_to_name(index))
-                    elif using_cred in self.middle_level_credential_list:
-                        for index in may_obtain_cred_index:
-                            if np.random.rand(1)<1.0:#0.7:
-                                cred_state_list[index]=True
-                                obtained_cred_this_machine.append(cred_index_to_name(index))
-                    elif using_cred in self.lowest_level_credential_list:
-                        for index in may_obtain_cred_index:
-                            if np.random.rand(1)<1.0:#0.4:
-                                cred_state_list[index]=True
-                                obtained_cred_this_machine.append(cred_index_to_name(index))
+                    for index in may_obtain_cred_index:
+                        cred_state_list[index]=True
+                        obtained_cred_this_machine.append(cred_index_to_name(index))
 
         return machine_state_list,cred_state_list
     
