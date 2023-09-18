@@ -198,7 +198,7 @@ if __name__ == "__main__":
 
                 reward_safe=0.0
                 if 0 in machine_has_compr_hop_new:
-                    reward_safe=-1000.0
+                    reward_safe=-200.0
                 reward_avai=False
                 if len(action_contain_list)==1:
                     if machine_index_to_name(action_contain_list[0]) in hop_1:
