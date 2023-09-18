@@ -72,7 +72,7 @@ if __name__ == "__main__":
             #if the state is interesting, update the q table
             machine_has_compr_new=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
             machine_has_compr_hop_new=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr_new] 
-            if (0 in machine_has_compr_hop_new) or (1 in machine_has_compr_hop_new) or (2 in machine_has_compr_hop_new) or (2 in machine_has_compr_hop_new): 
+            if (0 in machine_has_compr_hop_new) or (1 in machine_has_compr_hop_new) or (2 in machine_has_compr_hop_new): 
                 higher_state_new_machine=full_state_to_higher_state(machine_state_list_new)
                 new_valuedic_key_higher=higher_state_to_valuedic_key(higher_state_new_machine)
                 if new_valuedic_key_higher in list(value_map_dict_further):
