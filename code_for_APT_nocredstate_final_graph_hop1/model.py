@@ -167,14 +167,14 @@ if __name__ == "__main__":
             machine_has_compr_new=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
             machine_has_compr_hop_new=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr_new] 
 
-            if ((0 in machine_has_compr_hop_new) or (1 in machine_has_compr_hop_new) ): 
+            if ((0 in machine_has_compr_hop_new) or (1 in machine_has_compr_hop_new)): 
                 simplest_state_new_machine=full_state_to_simplest_state(machine_state_list_new)
                 new_valuedic_key=simplest_state_to_valuedic_key(simplest_state_new_machine)
                 Q_value_new=value_map_dict[new_valuedic_key]
 
                 reward_safe=0.0
                 if 0 in machine_has_compr_hop_new:
-                    reward_safe=-1000.0
+                    reward_safe=-200.0
                 reward_avai=False
                 if len(action_contain_list)==1:
                     if machine_index_to_name(action_contain_list[0]) in hop_1:
