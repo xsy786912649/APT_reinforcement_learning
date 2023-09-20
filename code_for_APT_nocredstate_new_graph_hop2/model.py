@@ -207,6 +207,11 @@ if __name__ == "__main__":
             if 0 in machine_has_compr_hop_new:
                 print(value_map_dict[current_valuedic_key])
                 break
+        
+        if q%100==0:
+            f_save=open("model_"+str(weight)+".pkl",'wb')
+            pickle.dump(value_map_dict,f_save)
+            f_save.close()
 
     f_save=open("model_"+str(weight)+".pkl",'wb')
     pickle.dump(value_map_dict,f_save)
