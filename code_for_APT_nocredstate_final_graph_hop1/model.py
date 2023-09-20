@@ -22,7 +22,7 @@ my_pomdp1=POMDP()
 #input()
 
 eps=0.3
-lr=0.5
+lr=0.1
 
 def index_to_action(index):
     if index==0:
@@ -134,7 +134,7 @@ if __name__ == "__main__":
                 for k in range(j):
                     value_map_dict[i].append(-2000.0)
 
-    for q in range(200000):
+    for q in range(10000):
         print("--------------------") 
         print(q)
 
@@ -188,11 +188,11 @@ if __name__ == "__main__":
                         reward_avai=-2*base_penalty
                     else:
                         reward_avai=-base_penalty-weight
-                reward=reward_safe+reward_avai
+                reward=reward_safe+reward_avai-0.01
                 if 0 not in machine_has_compr_hop_new:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+1999.0/2000*max(Q_value_new))
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+4999.0/5000*max(Q_value_new))
                 else:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward-2000.0)
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(-2000.0)
 
                 print(simplest_state_new_machine)
                 print(value_map_dict[current_valuedic_key][action_index])
