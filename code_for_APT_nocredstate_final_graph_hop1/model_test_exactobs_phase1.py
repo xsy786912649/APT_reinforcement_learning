@@ -41,6 +41,9 @@ if __name__ == "__main__":
             simplest_state_current_machine=full_state_to_simplest_state(machine_state_list_estimated)
             current_valuedic_key=simplest_state_to_valuedic_key(simplest_state_current_machine)
             Q_value_current=value_map_dict[current_valuedic_key]
+            #print(simplest_state_current_machine)
+            #print(Q_value_current)
+            #input()
 
             action_index=Q_value_current.index(max(Q_value_current)) 
             #action_index=0

@@ -134,7 +134,7 @@ if __name__ == "__main__":
                 for k in range(j):
                     value_map_dict[i].append(-2000.0)
 
-    for q in range(100000):
+    for q in range(200000):
         print("--------------------") 
         print(q)
 
@@ -190,7 +190,7 @@ if __name__ == "__main__":
                         reward_avai=-base_penalty-weight
                 reward=reward_safe+reward_avai
                 if 0 not in machine_has_compr_hop_new:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+499.0/500*max(Q_value_new))
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+1999.0/2000*max(Q_value_new))
                 else:
                     value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward-2000.0)
 
@@ -210,6 +210,11 @@ if __name__ == "__main__":
             if 0 in machine_has_compr_hop_new:
                 print(value_map_dict[current_valuedic_key])
                 break
+
+        if q%100==0:
+            f_save=open("model_"+str(weight)+".pkl",'wb')
+            pickle.dump(value_map_dict,f_save)
+            f_save.close()
 
     f_save=open("model_"+str(weight)+".pkl",'wb')
     pickle.dump(value_map_dict,f_save)
