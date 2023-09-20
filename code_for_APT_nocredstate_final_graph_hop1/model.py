@@ -145,7 +145,7 @@ if __name__ == "__main__":
         action_index=0
         action_contain_list=[]
 
-        for i in range(2000):
+        for i in range(500):
             #choose action based on eps-greedy policy
             simplest_state_current_machine=full_state_to_simplest_state(machine_state_list)
             current_valuedic_key=simplest_state_to_valuedic_key(simplest_state_current_machine)
