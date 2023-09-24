@@ -18,7 +18,7 @@ hop_2=N_hop[2]
 my_pomdp1=POMDP()
 
 eps=0.3
-lr=0.5
+lr=0.1
 
 def higher_state_to_valuedic_key(higher_state_current_machine):
     return tuple(higher_state_current_machine)
@@ -125,4 +125,3 @@ if __name__ == "__main__":
             f_save=open("model_phase2_"+str(weight)+".pkl",'wb')
             pickle.dump(value_map_dict_further,f_save)
             f_save.close()
-            input()
