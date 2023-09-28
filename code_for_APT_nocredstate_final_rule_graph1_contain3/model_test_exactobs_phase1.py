@@ -34,7 +34,7 @@ if __name__ == "__main__":
         machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp,seed=q)
         observation_true_list=[]
 
-        for i in range(2000):
+        for i in range(5000):
             machine_state_list_estimated=machine_state_list
             cred_state_list_estimated=cred_state_list
             

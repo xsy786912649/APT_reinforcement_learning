@@ -12,6 +12,9 @@ for index_machine in list(P0):
     N_hop[int(P0[index_machine])].append(index_machine)
 All_machine=N_hop[0]+N_hop[1]+N_hop[2]+N_hop[3]+N_hop[4]+N_hop[5]+N_hop[6]
 
+with open(f'./APT_data/neighbor_counts_number.pickle','rb') as f:
+    d1=pickle.load(f)
+
 All_cred=[]
 with open(f'./APT_data/comp_cred.pickle','rb') as f:
     P0=pickle.load(f)
@@ -99,6 +102,8 @@ class POMDP:
                 neighbors_of_n_list=list(self.G.neighbors(machine_index_to_name(n)))
                 neighbors_of_n_list_noncompromised=[machine for machine in neighbors_of_n_list if machine_state_list[machine_name_to_index(machine)]==False]
                 potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
+                if np.random.uniform()>1.25*len(potential_plan_compromise_list)/(d1[machine_index_to_name(n)]+len(potential_plan_compromise_list)):
+                    continue
                 if potential_plan_compromise_list==[]:
                     continue
                 
@@ -144,6 +149,8 @@ class POMDP:
                 neighbors_of_n_list=list(self.G.neighbors(machine_index_to_name(n)))
                 neighbors_of_n_list_noncompromised=[machine for machine in neighbors_of_n_list if machine_state_list[machine_name_to_index(machine)]==False]
                 potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
+                if np.random.uniform()>1.25*len(potential_plan_compromise_list)/(d1[machine_index_to_name(n)]+len(potential_plan_compromise_list)):
+                    continue
                 if potential_plan_compromise_list==[]:
                     continue
 

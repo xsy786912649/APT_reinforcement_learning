@@ -128,13 +128,13 @@ if __name__ == "__main__":
         value_map_dict = {}
         for i in range(pow(2,len(contain_hop))):
             value_map_dict[i]=[]
-            value_map_dict[i].append(-2000.0)
+            value_map_dict[i].append(-5000.0)
             for j in range(len(contain_hop)):
-                value_map_dict[i].append(-2000.0)
+                value_map_dict[i].append(-5000.0)
                 for k in range(j):
-                    value_map_dict[i].append(-2000.0)
+                    value_map_dict[i].append(-5000.0)
 
-    for q in range(10000):
+    for q in range(20000):
         print("--------------------") 
         print(q)
 
@@ -145,7 +145,7 @@ if __name__ == "__main__":
         action_index=0
         action_contain_list=[]
 
-        for i in range(2000):
+        for i in range(5000):
             #choose action based on eps-greedy policy
             simplest_state_current_machine=full_state_to_simplest_state(machine_state_list)
             current_valuedic_key=simplest_state_to_valuedic_key(simplest_state_current_machine)
@@ -190,9 +190,9 @@ if __name__ == "__main__":
                         reward_avai=-base_penalty-weight
                 reward=reward_safe+reward_avai-0.01
                 if 0 not in machine_has_compr_hop_new:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+4999.0/5000*max(Q_value_new))
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+9999.0/10000*max(Q_value_new))
                 else:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(-2000.0)
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(-5000.0)
 
                 print(simplest_state_new_machine)
                 print(value_map_dict[current_valuedic_key][action_index])

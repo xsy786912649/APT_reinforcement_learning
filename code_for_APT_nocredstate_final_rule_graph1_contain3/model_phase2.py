@@ -35,7 +35,7 @@ if __name__ == "__main__":
     else:
         value_map_dict_further={}
 
-    for q in range(10000):
+    for q in range(20000):
         print("--------------------") 
         print(q)
 
@@ -46,7 +46,7 @@ if __name__ == "__main__":
         action_index=0
         action_contain_list=[]
 
-        for i in range(2000):
+        for i in range(5000):
             #choose action based on eps-greedy policy
             higher_state_current_machine=full_state_to_higher_state(machine_state_list)
             current_valuedic_key=higher_state_to_valuedic_key(higher_state_current_machine)
@@ -100,9 +100,9 @@ if __name__ == "__main__":
                         reward_avai=-base_penalty-weight
                 reward=reward_safe+reward_avai-0.01
                 if 0 not in machine_has_compr_hop_new:
-                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward+4999.0/5000*max(Q_value_new))
+                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward+9999.0/10000*max(Q_value_new))
                 else:
-                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(-2000.0)
+                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(-5000.0)
 
                 print(higher_state_current_machine)
             
