@@ -180,8 +180,12 @@ if __name__ == "__main__":
                 value_map_dict[i].append(-5000.0)
                 for k in range(j):
                     value_map_dict[i].append(-5000.0)
+            for j in range(len(contain_hop)):
+                for k in range(j):
+                    for q in range(k):
+                        value_map_dict[i].append(-5000.0)
 
-    for q in range(20000):
+    for q in range(40000):
         print("--------------------") 
         print(q)
 
