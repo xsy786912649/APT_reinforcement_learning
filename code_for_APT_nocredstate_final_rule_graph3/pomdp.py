@@ -102,7 +102,12 @@ class POMDP:
                 neighbors_of_n_list=list(self.G.neighbors(machine_index_to_name(n)))
                 neighbors_of_n_list_noncompromised=[machine for machine in neighbors_of_n_list if machine_state_list[machine_name_to_index(machine)]==False]
                 potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
-                if np.random.uniform()>0.3*len(potential_plan_compromise_list)/(d1[machine_index_to_name(n)]+len(potential_plan_compromise_list)):
+                aaaa=0.3*len(potential_plan_compromise_list)/(d1[machine_index_to_name(n)]+len(potential_plan_compromise_list))
+                if aaaa<0.01:
+                    aaaa=0.0
+                elif aaaa>=0.01 and aaaa<0.06:
+                    aaaa=0.06
+                if np.random.uniform()>=aaaa:
                     continue
                 if potential_plan_compromise_list==[]:
                     continue
@@ -149,7 +154,12 @@ class POMDP:
                 neighbors_of_n_list=list(self.G.neighbors(machine_index_to_name(n)))
                 neighbors_of_n_list_noncompromised=[machine for machine in neighbors_of_n_list if machine_state_list[machine_name_to_index(machine)]==False]
                 potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
-                if np.random.uniform()>0.3*len(potential_plan_compromise_list)/(d1[machine_index_to_name(n)]+len(potential_plan_compromise_list)):
+                aaaa=0.3*len(potential_plan_compromise_list)/(d1[machine_index_to_name(n)]+len(potential_plan_compromise_list))
+                if aaaa<0.01:
+                    aaaa=0.0
+                elif aaaa>=0.01 and aaaa<0.06:
+                    aaaa=0.06
+                if np.random.uniform()>=aaaa:
                     continue
                 if potential_plan_compromise_list==[]:
                     continue
