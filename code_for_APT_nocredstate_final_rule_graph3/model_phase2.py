@@ -100,7 +100,7 @@ if __name__ == "__main__":
                         reward_avai=-base_penalty-weight
                 reward=reward_safe+reward_avai-0.01
                 if 0 not in machine_has_compr_hop_new:
-                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward+9999.0/10000*max(Q_value_new))
+                    value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(reward+19999.0/20000*max(Q_value_new))
                 else:
                     value_map_dict_further[current_valuedic_key][action_index]=value_map_dict_further[current_valuedic_key][action_index]*(1-lr)+lr*(-5000.0)
 
