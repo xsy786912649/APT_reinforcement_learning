@@ -14,9 +14,24 @@ target=N_hop[0]
 hop_1=N_hop[1]
 hop_2=N_hop[2]
 hop_3=N_hop[3]
-contain_hop=hop_1
+contain_hop=hop_1[0:8]+hop_1[9:13]+hop_1[15:]
+#contain_hop=hop_1[0:8]
 attention_hop=hop_1+hop_2
 my_pomdp1=POMDP()
+
+'''
+with open(f'./APT_data/neighbor_counts_number.pickle','rb') as f:
+    d1=pickle.load(f)
+with open(f'./APT_data/network_topo.gpickle','rb') as f:
+    GG=pickle.load(f)
+GG.remove_node('EnterpriseAppServer')
+for n in contain_hop:
+    neighbors_of_n_list_noncompromised=list(GG.neighbors(n))
+    potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
+    aaaa=0.3*len(potential_plan_compromise_list)/(d1[n]+len(potential_plan_compromise_list))
+    print(n,aaaa)
+input()
+'''
 
 print([len(el) for el in N_hop])
 #input()
@@ -134,7 +149,7 @@ if __name__ == "__main__":
                 for k in range(j):
                     value_map_dict[i].append(-5000.0)
 
-    for q in range(20000):
+    for q in range(10000):
         print("--------------------") 
         print(q)
 
@@ -188,9 +203,9 @@ if __name__ == "__main__":
                         reward_avai=-2*base_penalty
                     else:
                         reward_avai=-base_penalty-weight
-                reward=reward_safe+reward_avai-0.01
+                reward=reward_safe+reward_avai-0.001
                 if 0 not in machine_has_compr_hop_new:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+4999.0/5000*max(Q_value_new))
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+9999.0/10000*max(Q_value_new))
                 else:
                     value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(-5000.0)
 

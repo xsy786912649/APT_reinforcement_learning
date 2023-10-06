@@ -14,7 +14,7 @@ target=N_hop[0]
 hop_1=N_hop[1]
 hop_2=N_hop[2]
 hop_3=N_hop[3]
-contain_hop=hop_1
+contain_hop=hop_1[0:8]+hop_1[9:13]+hop_1[15:]
 attention_hop=hop_1+hop_2
 my_pomdp1=POMDP()
 
