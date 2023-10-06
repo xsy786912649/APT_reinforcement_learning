@@ -207,7 +207,7 @@ if __name__ == "__main__":
                 if 0 not in machine_has_compr_hop_new:
                     value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(reward+9999.0/10000*max(Q_value_new))
                 else:
-                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(-5300.0)
+                    value_map_dict[current_valuedic_key][action_index]=value_map_dict[current_valuedic_key][action_index]*(1-lr)+lr*(-5600.0)
 
                 print(simplest_state_new_machine)
                 print(value_map_dict[current_valuedic_key][action_index])
@@ -226,7 +226,7 @@ if __name__ == "__main__":
                 print(value_map_dict[current_valuedic_key])
                 break
 
-        if q%1000==0:
+        if q%200==0:
             f_save=open("model_"+str(weight)+".pkl",'wb')
             pickle.dump(value_map_dict,f_save)
             f_save.close()
