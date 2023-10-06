@@ -53,16 +53,17 @@ if __name__ == "__main__":
             machine_state_list_new,cred_state_list_new=my_pomdp.state_transition(machine_state_list,cred_state_list,action_contain_list)
 
             machine_has_compr=[index for index in range(len(machine_state_list)) if machine_state_list[index]==True]
-            machine_has_compr_1hop=[(machine_name_to_index(me) in machine_has_compr) for me in hop_1]
+            machine_has_compr_1hop=[(machine_name_to_index(me) in machine_has_compr) for me in contain_hop]
 
             new_machine_has_compr=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True]
-            new_machine_has_compr_1hop=[(machine_name_to_index(me) in new_machine_has_compr) for me in hop_1]
+            new_machine_has_compr_1hop=[(machine_name_to_index(me) in new_machine_has_compr) for me in contain_hop]
             #print("current_state")
             #print(machine_has_compr_1hop)
             #print("next_state")
             #print(new_machine_has_compr_1hop)
             #print("action")
-            #print([(machine_name_to_index(me) in action_contain_list) for me in hop_1])
+            #print([(machine_name_to_index(me) in action_contain_list) for me in contain_hop])
+            #print("------------------")
             
             
             machine_state_list=machine_state_list_new
