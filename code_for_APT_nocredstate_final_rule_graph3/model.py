@@ -229,6 +229,7 @@ if __name__ == "__main__":
             f_save=open("model_"+str(weight)+".pkl",'wb')
             pickle.dump(value_map_dict,f_save)
             f_save.close()
+            #input()
 
     f_save=open("model_"+str(weight)+".pkl",'wb')
     pickle.dump(value_map_dict,f_save)
