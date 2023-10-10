@@ -13,9 +13,8 @@ for index_machine in list(P0):
 target=N_hop[0]
 hop_1=N_hop[1]
 hop_2=N_hop[2]
-#contain_hop=hop_1[0:8]+hop_1[9:13]+hop_1[15:16]+[hop_1[17]]
+#contain_hop=hop_1[0:6]+hop_1[7:8]+hop_1[9:12]+[hop_1[15]]+[hop_1[17]]
 contain_hop=hop_1
-
 
 if __name__ == "__main__":
 
@@ -30,7 +29,6 @@ if __name__ == "__main__":
         
         for i in range(5000):
             
-
             action_contain_list1=[i for i in range(len(machine_state_list)) if machine_state_list[i]==True and machine_index_to_name(i) in contain_hop] 
             if len(action_contain_list1)<3:
                 action_contain_list=action_contain_list1

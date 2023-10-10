@@ -102,11 +102,12 @@ class POMDP:
                 neighbors_of_n_list=list(self.G.neighbors(machine_index_to_name(n)))
                 neighbors_of_n_list_noncompromised=[machine for machine in neighbors_of_n_list if machine_state_list[machine_name_to_index(machine)]==False]
                 potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
-                aaaa=0.3*len(potential_plan_compromise_list)/(d1[machine_index_to_name(n)]+len(potential_plan_compromise_list))
-                if aaaa<0.013:
-                    aaaa=0.0
-                elif aaaa>=0.013 and aaaa<0.06:
-                    aaaa=0.06
+                aaaa=0.5*len(potential_plan_compromise_list)/(d1[machine_index_to_name(n)]+len(potential_plan_compromise_list))
+                if machine_index_to_name(n) in N_hop[1]:
+                    if aaaa<0.06:
+                        aaaa=0.0
+                if machine_index_to_name(n) not in N_hop[1]:
+                    aaaa=aaaa*2
                 if np.random.uniform()>=aaaa:
                     continue
                 if potential_plan_compromise_list==[]:
@@ -154,11 +155,12 @@ class POMDP:
                 neighbors_of_n_list=list(self.G.neighbors(machine_index_to_name(n)))
                 neighbors_of_n_list_noncompromised=[machine for machine in neighbors_of_n_list if machine_state_list[machine_name_to_index(machine)]==False]
                 potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
-                aaaa=0.3*len(potential_plan_compromise_list)/(d1[machine_index_to_name(n)]+len(potential_plan_compromise_list))
-                if aaaa<0.013:
-                    aaaa=0.0
-                elif aaaa>=0.013 and aaaa<0.06:
-                    aaaa=0.06
+                aaaa=0.5*len(potential_plan_compromise_list)/(d1[machine_index_to_name(n)]+len(potential_plan_compromise_list))
+                if machine_index_to_name(n) in N_hop[1]:
+                    if aaaa<0.06:
+                        aaaa=0.0
+                if machine_index_to_name(n) not in N_hop[1]:
+                    aaaa=aaaa*2
                 if np.random.uniform()>=aaaa:
                     continue
                 if potential_plan_compromise_list==[]:

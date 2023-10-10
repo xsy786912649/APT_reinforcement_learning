@@ -14,8 +14,7 @@ target=N_hop[0]
 hop_1=N_hop[1]
 hop_2=N_hop[2]
 hop_3=N_hop[3]
-contain_hop=hop_1[0:8]+hop_1[9:13]+hop_1[15:]
-#contain_hop=hop_1[0:8]
+contain_hop=hop_1[0:6]+hop_1[7:8]+hop_1[9:12]+[hop_1[15]]+[hop_1[17]]
 attention_hop=hop_1+hop_2
 my_pomdp1=POMDP()
 
@@ -25,10 +24,10 @@ with open(f'./APT_data/neighbor_counts_number.pickle','rb') as f:
 with open(f'./APT_data/network_topo.gpickle','rb') as f:
     GG=pickle.load(f)
 GG.remove_node('EnterpriseAppServer')
-for n in contain_hop:
+for n in hop_1:
     neighbors_of_n_list_noncompromised=list(GG.neighbors(n))
     potential_plan_compromise_list = [item for item in neighbors_of_n_list_noncompromised]
-    aaaa=0.3*len(potential_plan_compromise_list)/(d1[n]+len(potential_plan_compromise_list))
+    aaaa=0.5*len(potential_plan_compromise_list)/(d1[n]+len(potential_plan_compromise_list))
     print(n,aaaa)
 input()
 '''
@@ -149,12 +148,12 @@ if __name__ == "__main__":
                 for k in range(j):
                     value_map_dict[i].append(-5000.0)
 
-    for q in range(80000):
+    for q in range(10000):
         print("--------------------") 
         print(q)
 
         my_pomdp=POMDP()
-        machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp,q%100)
+        machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp)
         
         no_change_action=False
         action_index=0
@@ -178,7 +177,7 @@ if __name__ == "__main__":
             machine_state_list_new,cred_state_list_new=my_pomdp.state_transition(machine_state_list,cred_state_list,action_contain_list)
             
             #if the state is interesting, update the q table
-        
+
             machine_has_compr_new=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
             machine_has_compr_hop_new=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr_new] 
 

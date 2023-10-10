@@ -13,7 +13,7 @@ for index_machine in list(P0):
 target=N_hop[0]
 hop_1=N_hop[1]
 hop_2=N_hop[2]
-contain_hop=hop_1[0:8]+hop_1[9:13]+hop_1[15:]
+#contain_hop=hop_1[0:6]+hop_1[7:8]+hop_1[9:12]+[hop_1[15]]+[hop_1[17]]
 contain_hop=hop_1
 
 
