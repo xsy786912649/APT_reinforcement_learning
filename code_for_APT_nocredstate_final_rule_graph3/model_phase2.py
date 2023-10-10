@@ -35,6 +35,10 @@ if __name__ == "__main__":
     else:
         value_map_dict_further={}
 
+    f_save=open("model_phase2_"+str(weight)+".pkl",'wb')
+    pickle.dump(value_map_dict_further,f_save)
+    f_save.close()
+
     for q in range(20000):
         print("--------------------") 
         print(q)
