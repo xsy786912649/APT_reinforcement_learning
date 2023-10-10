@@ -149,7 +149,7 @@ if __name__ == "__main__":
                 for k in range(j):
                     value_map_dict[i].append(-5000.0)
 
-    for q in range(30000):
+    for q in range(80000):
         print("--------------------") 
         print(q)
 
