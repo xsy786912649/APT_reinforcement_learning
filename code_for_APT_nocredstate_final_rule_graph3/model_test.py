@@ -41,7 +41,7 @@ def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_st
         if i in observa_true:
             machine_state_list_belief_prability_new[i]=1.0
 
-        elif machine_index_to_name(i) in hop_1+hop_2+hop_3: 
+        elif machine_index_to_name(i) in hop_1+hop_2: 
             if machine_state_list_belief_prability_new[i]<0.01:
                 machine_state_list_belief_prability_new[i]=0.01
             elif machine_state_list_belief_prability_new[i]>0.8:
@@ -97,7 +97,7 @@ if __name__ == "__main__":
             machine_state_list=machine_state_list_new
             cred_state_list=cred_state_list_new
 
-            observation_list=[machine_name_to_index(ele) for ele in hop_1+hop_2+hop_3]
+            observation_list=[machine_name_to_index(ele) for ele in hop_1+hop_2]
             action_observation_list=random.sample(observation_list,2)
 
             observation_machine=my_pomdp.state_observation(machine_state_list,action_observation_list) 
