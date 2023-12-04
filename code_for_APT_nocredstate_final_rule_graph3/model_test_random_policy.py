@@ -50,7 +50,7 @@ if __name__ == "__main__":
                 times+=1
                 print(i)
                 break
-        result[q][1] = times
+        result[q][1] = i
 
     average_number=average_number/times
     print(average_number)
