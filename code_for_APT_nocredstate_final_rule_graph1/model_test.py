@@ -6,7 +6,7 @@ from model import *
 from model_phase2 import * 
 import sys
 
-with open(f'./APT_data/hop.pickle','rb') as f:
+with open(f'APT_data/hop.pickle','rb') as f:
     P0=pickle.load(f)
 N_hop=[[] for i in range(7)]
 for index_machine in list(P0):
@@ -67,14 +67,15 @@ if __name__ == "__main__":
     times=0
     total_iteration=0
     total_containing_number=0
-    for q in range(100):
+    result = {}
+    for q in range(400):
         print("--------------------") 
         print(q)
 
         my_pomdp=POMDP()
         machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp,seed=q)
         observation_true_list=[]
-
+        result[q] = [99999999999, -1]
         for i in range(5000):
             machine_state_list_estimated,cred_state_list_estimated=estimate_state(machine_state_list_belief_prability,cred_state_list_belief_prability)
             higher_state_current_machine=full_state_to_higher_state(machine_state_list_estimated) 
@@ -126,14 +127,16 @@ if __name__ == "__main__":
             print("------------next____________")
 
             machine_has_compr=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
-            machine_has_compr_hop=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr] 
+            machine_has_compr_hop=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr]
+            result[q][0] = min(result[q][0], min(machine_has_compr_hop)) 
             if 0 in machine_has_compr_hop:
                 average_number+=i
                 times+=1
                 break
-
+        result[q][1] = times
     average_number=average_number/times
     total_containing_number_fre=total_containing_number/total_iteration
     print(average_number)
     print(total_containing_number_fre)
     print(times)
+    print(result)

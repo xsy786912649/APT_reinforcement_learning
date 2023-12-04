@@ -21,13 +21,15 @@ if __name__ == "__main__":
 
     average_number=0
     times=0
-    for q in range(100):
+    result = {}
+    for q in range(400):
         print("--------------------") 
         print(q)
 
         my_pomdp=POMDP()
         machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp,seed=q)
         
+        result[q] = [99999999999, -1]
         for i in range(5000):
             
 
@@ -45,12 +47,15 @@ if __name__ == "__main__":
 
             machine_has_compr=[index for index in range(len(machine_state_list_new)) if machine_state_list_new[index]==True] 
             machine_has_compr_hop=[my_pomdp.hop[machine_index_to_name(index)] for index in machine_has_compr] 
+            result[q][0] = min(result[q][0], min(machine_has_compr_hop)) 
             if 0 in machine_has_compr_hop:
                 average_number+=i
                 times+=1
                 print(i)
                 break
+        result[q][1] = times
 
     average_number=average_number/times
     print(average_number)
     print(times)
+    print(result)
