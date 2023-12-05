@@ -1,4 +1,14 @@
 from pomdp import *
 from model import *
 
-print(index_to_action(1+12))
+
+
+
+
+
+number=1+18+18*(18-1)/2+18*(18-1)*(18-2)/6-1
+number=int(number)
+print(number)
+
+for i in range(number+1):
+    print(index_to_action(i))
