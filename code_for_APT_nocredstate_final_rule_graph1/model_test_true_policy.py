@@ -29,10 +29,16 @@ if __name__ == "__main__":
         machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp,seed=q)
         
         result[q] = [99999999999, -1]
-        for i in range(5000):
-            
 
-            action_contain_list1=[i for i in range(len(machine_state_list)) if machine_state_list[i]==True and machine_index_to_name(i) in contain_hop] 
+        machine_state_list_delay_list=[]
+
+        for i in range(5000):
+
+            if i % 100==0: 
+                machine_state_list_delay_list.append(machine_state_list)
+            machine_state_list_delay = machine_state_list_delay_list[-1]
+            
+            action_contain_list1=[i for i in range(len(machine_state_list_delay)) if machine_state_list_delay[i]==True and machine_index_to_name(i) in contain_hop] 
             if len(action_contain_list1)<3:
                 action_contain_list=action_contain_list1
             else:
