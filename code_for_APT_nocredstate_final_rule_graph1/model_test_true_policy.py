@@ -34,9 +34,13 @@ if __name__ == "__main__":
 
         for i in range(5000):
 
-            if i % 100==0: 
+            if i % 100==99: 
                 machine_state_list_delay_list.append(machine_state_list)
-            machine_state_list_delay = machine_state_list_delay_list[-1]
+
+            if len(machine_state_list_delay_list)==0:
+                machine_state_list_delay = [False for i in range(len(machine_state_list))]
+            else:
+                machine_state_list_delay = machine_state_list_delay_list[-1]
             
             action_contain_list1=[i for i in range(len(machine_state_list_delay)) if machine_state_list_delay[i]==True and machine_index_to_name(i) in contain_hop] 
             if len(action_contain_list1)<3:
