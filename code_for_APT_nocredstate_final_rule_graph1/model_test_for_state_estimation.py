@@ -18,10 +18,18 @@ hop_3=N_hop[3]
 
 def estimate_state(machine_state_list_belief_prability,cred_state_list_belief_prability):
     
-    machine_state_list_estimated= [probability>0.81 for probability in machine_state_list_belief_prability]
+    machine_state_list_estimated= [probability>0.79 for probability in machine_state_list_belief_prability]
     cred_state_list_estimated=[probability>0.81 for probability in cred_state_list_belief_prability]
     
     return machine_state_list_estimated,cred_state_list_estimated
+
+def naive_estimate_state(naive_machine_state_list_estimated,observa_true):
+    
+    for i in range(len(naive_machine_state_list_estimated)):
+        if i in observa_true:
+            naive_machine_state_list_estimated[i]=True
+    
+    return naive_machine_state_list_estimated
 
 def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_state_list_belief_prability,action_contain_list,observation_machine,action_observation_list,observa_true):
     sampled_number=100
@@ -50,8 +58,8 @@ def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_st
         else: 
             if machine_state_list_belief_prability_new[i]<0.01:
                 machine_state_list_belief_prability_new[i]=0.01
-            elif machine_state_list_belief_prability_new[i]>0.3:
-                machine_state_list_belief_prability_new[i]=0.3
+            elif machine_state_list_belief_prability_new[i]>0.05:
+                machine_state_list_belief_prability_new[i]=0.05
 
     return machine_state_list_belief_prability_new, cred_state_list_belief_prability_new
 
@@ -73,17 +81,23 @@ if __name__ == "__main__":
     estimate_high_right=0
     estimate_high_error=0
 
-    for q in range(10):
+    naive_estimate_high_error_lists=[]
+    naive_estimate_high_wrong=0
+    naive_estimate_high_right=0
+    naive_estimate_high_error=0
+
+    for q in range(3):
         print("--------------------") 
         print(q)
 
         my_pomdp=POMDP()
         machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability=random_attacker_start(my_pomdp,seed=q)
+        naive_machine_state_list_estimated=[False for i in range(len(machine_state_list))]
         observation_true_list=[]
         result[q] = [99999999999, -1]
 
         estimate_high_error_this=[]
-        
+        naive_estimate_high_error_this=[]
 
         for i in range(5000):
             machine_state_list_estimated,cred_state_list_estimated=estimate_state(machine_state_list_belief_prability,cred_state_list_belief_prability)
@@ -100,15 +114,25 @@ if __name__ == "__main__":
             estimate_high=np.array(list(map(int, full_state_to_higher_state(machine_state_list_estimated))))
             true_high=np.array(list(map(int,full_state_to_higher_state(machine_state_list))))
             print(np.sum(np.abs(estimate_high-true_high)))
-            estimate_low=np.array(list(map(int,full_state_to_simplest_state(machine_state_list_estimated))))
-            estimate_lowlist=np.array(list(map(int,full_state_to_simplest_state(machine_state_list))))
-            print(np.sum(np.abs(estimate_low-estimate_lowlist)))
+            #estimate_low=np.array(list(map(int,full_state_to_simplest_state(machine_state_list_estimated))))
+            #estimate_lowlist=np.array(list(map(int,full_state_to_simplest_state(machine_state_list))))
+            #print(np.sum(np.abs(estimate_low-estimate_lowlist)))
             if np.sum(np.abs(estimate_high-true_high))>0:
                 estimate_high_wrong=estimate_high_wrong+1
                 estimate_high_error+=np.sum(np.abs(estimate_high-true_high))
             else:
                 estimate_high_right=estimate_high_right+1
             estimate_high_error_this.append(np.sum(np.abs(estimate_high-true_high)))
+ 
+            naive_estimate_high=np.array(list(map(int, full_state_to_higher_state(naive_machine_state_list_estimated))))
+            print(np.sum(np.abs(naive_estimate_high-true_high)))
+            if np.sum(np.abs(naive_estimate_high-true_high))>0:
+                naive_estimate_high_wrong=naive_estimate_high_wrong+1
+                naive_estimate_high_error+=np.sum(np.abs(naive_estimate_high-true_high))
+            else:
+                naive_estimate_high_right=naive_estimate_high_right+1
+            naive_estimate_high_error_this.append(np.sum(np.abs(naive_estimate_high-true_high)))
+
 
             action_index=Q_value_current.index(max(Q_value_current)) 
             #action_index=0
@@ -135,7 +159,8 @@ if __name__ == "__main__":
 
             my_pomdp_tem=POMDP()
             machine_state_list_belief_prability,cred_state_list_belief_prability=belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_state_list_belief_prability,action_contain_list,observation_machine,action_observation_list,observation_true_list)
-    
+            naive_machine_state_list_estimated=naive_estimate_state(naive_machine_state_list_estimated,observation_true_list)
+            
             #print(machine_state_list_belief_prability)
             #print([machine_state_list_belief_prability[i] for i in range(len(machine_state_list_belief_prability)) if machine_index_to_name(i) in hop_1+hop_2+hop_3])
             print(machine_state_list_belief_prability[action_observation_list[0]],machine_state_list_belief_prability[action_observation_list[1]])
@@ -160,3 +185,8 @@ if __name__ == "__main__":
     print(estimate_high_wrong)
     print(estimate_high_right)
     print(estimate_high_error)
+
+    print(naive_estimate_high_error_lists)
+    print(naive_estimate_high_wrong)
+    print(naive_estimate_high_right)
+    print(naive_estimate_high_error)
