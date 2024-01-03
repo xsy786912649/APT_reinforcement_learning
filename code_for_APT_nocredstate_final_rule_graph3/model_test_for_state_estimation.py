@@ -5,6 +5,7 @@ from pomdp import *
 from model import *
 from model_phase2 import * 
 import sys
+import time
 
 with open(f'./APT_data/hop.pickle','rb') as f:
     P0=pickle.load(f)
@@ -24,6 +25,7 @@ def estimate_state(machine_state_list_belief_prability,cred_state_list_belief_pr
     return machine_state_list_estimated,cred_state_list_estimated
 
 def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_state_list_belief_prability,action_contain_list,observation_machine,action_observation_list,observa_true):
+    aaa=time.time()
     sampled_number=100
     machine_state_list_belief_prability_new=np.zeros_like(machine_state_list_belief_prability)
     cred_state_list_belief_prability_new=np.zeros_like(cred_state_list_belief_prability)
@@ -52,8 +54,8 @@ def belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_st
                 machine_state_list_belief_prability_new[i]=0.01
             elif machine_state_list_belief_prability_new[i]>0.3:
                 machine_state_list_belief_prability_new[i]=0.3
-
-    return machine_state_list_belief_prability_new, cred_state_list_belief_prability_new
+    bbb=time.time()-aaa
+    return machine_state_list_belief_prability_new, cred_state_list_belief_prability_new,bbb
 
 if __name__ == "__main__":
     weight = float(sys.argv[1]) #10.0
@@ -73,7 +75,9 @@ if __name__ == "__main__":
     estimate_high_right=0
     estimate_high_error=0
 
-    for q in range(10):
+    estimate_time=0
+
+    for q in range(1):
         print("--------------------") 
         print(q)
 
@@ -133,8 +137,9 @@ if __name__ == "__main__":
             print(machine_state_list_belief_prability[action_observation_list[0]],machine_state_list_belief_prability[action_observation_list[1]])
 
             my_pomdp_tem=POMDP()
-            machine_state_list_belief_prability,cred_state_list_belief_prability=belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_state_list_belief_prability,action_contain_list,observation_machine,action_observation_list,observation_true_list)
-    
+            machine_state_list_belief_prability,cred_state_list_belief_prability,time_computation=belief_state_update(my_pomdp_tem,machine_state_list_belief_prability,cred_state_list_belief_prability,action_contain_list,observation_machine,action_observation_list,observation_true_list)
+            estimate_time=estimate_time+time_computation
+
             #print(machine_state_list_belief_prability)
             #print([machine_state_list_belief_prability[i] for i in range(len(machine_state_list_belief_prability)) if machine_index_to_name(i) in hop_1+hop_2+hop_3])
             print(machine_state_list_belief_prability[action_observation_list[0]],machine_state_list_belief_prability[action_observation_list[1]])
@@ -159,3 +164,5 @@ if __name__ == "__main__":
     print(estimate_high_wrong)
     print(estimate_high_right)
     print(estimate_high_error)
+
+    print(estimate_time)
