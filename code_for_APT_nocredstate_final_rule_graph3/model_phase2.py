@@ -129,3 +129,6 @@ if __name__ == "__main__":
             f_save=open("model_phase2_"+str(weight)+".pkl",'wb')
             pickle.dump(value_map_dict_further,f_save)
             f_save.close()
+            f_save=open("./check_point/model2_"+str(q)+"_"+str(weight)+".pkl",'wb')
+            pickle.dump(value_map_dict_further,f_save)
+            f_save.close()

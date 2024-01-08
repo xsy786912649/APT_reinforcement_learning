@@ -4,6 +4,7 @@ import pickle
 from pomdp import *
 import os
 import sys
+import time
 
 with open(f'./APT_data/hop.pickle','rb') as f:
     P0=pickle.load(f)
@@ -119,6 +120,7 @@ def random_attacker_start(my_pomdp, seed=None) :
     return machine_state_list,cred_state_list,machine_state_list_belief_prability,cred_state_list_belief_prability 
 
 if __name__ == "__main__":
+    time_start=time.time()
     weight = float(sys.argv[1]) #10.0
     base_penalty= float(sys.argv[2])
     if os.path.exists("./model_"+str(weight)+".pkl"):
@@ -134,7 +136,7 @@ if __name__ == "__main__":
                 for k in range(j):
                     value_map_dict[i].append(-5000.0)
 
-    for q in range(11000):
+    for q in range(20000):
         print("--------------------") 
         print(q)
 
@@ -212,7 +214,7 @@ if __name__ == "__main__":
                 break
 
         if q%1000==0:
-            f_save=open("model_"+str(weight)+".pkl",'wb')
+            f_save=open("./check_point/model_"+str(q)+"_"+str(weight)+".pkl",'wb')
             pickle.dump(value_map_dict,f_save)
             f_save.close()
             print(q)
@@ -221,6 +223,8 @@ if __name__ == "__main__":
     f_save=open("model_"+str(weight)+".pkl",'wb')
     pickle.dump(value_map_dict,f_save)
     f_save.close()
+    time_end=time.time()
+    print('totally cost',time_end-time_start)
     
             
         

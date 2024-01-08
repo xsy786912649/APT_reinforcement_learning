@@ -39,7 +39,7 @@ if __name__ == "__main__":
         f_save.close()
         #input()
 
-    for q in range(10000):
+    for q in range(20000):
         print("--------------------") 
         print(q)
 
@@ -125,7 +125,10 @@ if __name__ == "__main__":
             #print(full_state_to_simplest_state(machine_state_list,cred_state_list))
             #print(full_state_to_higher_state(machine_state_list,cred_state_list))
 
-        if q%100==0:
+        if q%1000==0:
             f_save=open("model_phase2_"+str(weight)+".pkl",'wb')
+            pickle.dump(value_map_dict_further,f_save)
+            f_save.close()
+            f_save=open("./check_point/model2_"+str(q)+"_"+str(weight)+".pkl",'wb')
             pickle.dump(value_map_dict_further,f_save)
             f_save.close()
