@@ -6,6 +6,7 @@ plt.style.use('ggplot')
 import matplotlib
 matplotlib.rcParams['font.sans-serif'] = ['SimHei']
 matplotlib.rcParams['axes.unicode_minus']=False
+plt.rcParams.update({'font.size': 14})
 
 index = np.arange(20)
 data_1=np.array([1617.5757575757575, 2319.1944444444443, 2212.813953488372, 2355.025641025641, 2352.813953488372, 2233.3888888888887, 2523.025641025641, 2410.4827586206898, 2847.4166666666665, 2761.0588235294117, 2829.1481481481483, 2981.5882352941176, 2679.0, 2867.2916666666665, 3112.21875, 2927.655172413793, 3065.56, 3096.6, 3200.40625, 3106.6470588235293])
@@ -17,7 +18,7 @@ wide_df = pd.DataFrame(data, index, ["RLATP", "RLATP without State Dimension Red
 ax = sns.lineplot(data=wide_df)
 ax.set(xlabel='Thousands Learning Iterations', ylabel='Average Defense Cycles ') 
 plt.ylim(1300,3499)
-plt.subplots_adjust(left=0.11, right=0.993, top=0.983, bottom=0.095)
+plt.subplots_adjust(left=0.138, right=1.0, top=1.0, bottom=0.113)
 plt.savefig('./figures/defense_cycle_graph3.pdf') 
 plt.show()
 
@@ -34,7 +35,7 @@ wide_df = pd.DataFrame(data, index, ["RLATP", "RLATP without State Dimension Red
 ax = sns.lineplot(data=wide_df)
 ax.set(xlabel='Thousands Learning Iterations', ylabel='Defender Success Rate ') 
 plt.ylim(0.2,0.89)
-plt.subplots_adjust(left=0.088, right=0.993, top=0.983, bottom=0.095)
+plt.subplots_adjust(left=0.106, right=1.0, top=1.0, bottom=0.113)
 plt.savefig('./figures/defense_rate_graph3.pdf') 
 plt.show()
 
@@ -49,7 +50,7 @@ wide_df = pd.DataFrame(data, index, ["RLATP", "RLATP without Multiple-phase Lear
 ax = sns.lineplot(data=wide_df)
 ax.set(xlabel='Thousands Learning Iterations', ylabel='Average Defense Cycles ') 
 plt.ylim(1400,3499)
-plt.subplots_adjust(left=0.11, right=0.993, top=0.983, bottom=0.095)
+plt.subplots_adjust(left=0.138, right=1.0, top=1.0, bottom=0.113)
 plt.savefig('./figures/defense_cycle_more_graph3.pdf') 
 plt.show()
 
@@ -68,7 +69,7 @@ wide_df = pd.DataFrame(data, index, ["RLATP", "RLATP without Multiple-phase Lear
 ax = sns.lineplot(data=wide_df)
 ax.set(xlabel='Thousands Learning Iterations', ylabel='Defender Success Rate ') 
 plt.ylim(0.2,0.89)
-plt.subplots_adjust(left=0.088, right=0.993, top=0.983, bottom=0.095)
+plt.subplots_adjust(left=0.106, right=1.0, top=1.0, bottom=0.113)
 plt.savefig('./figures/defense_rate_more_graph3.pdf') 
 plt.show()
 

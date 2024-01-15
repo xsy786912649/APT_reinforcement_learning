@@ -22,6 +22,8 @@ if __name__ == "__main__":
     average_number=0
     times=0
     result = {}
+    total_containing_number=0
+    total_iteration=0
     for q in range(400):
         print("--------------------") 
         print(q)
@@ -44,6 +46,9 @@ if __name__ == "__main__":
             else:
                 action_contain_list=[action_contain_list1[0],action_contain_list1[1],action_contain_list1[2]]
 
+            total_containing_number+=len(action_contain_list)
+            total_iteration+=1
+
             #state_transition
             machine_state_list_new,cred_state_list_new=my_pomdp.state_transition(machine_state_list,cred_state_list,action_contain_list)
             
@@ -61,6 +66,8 @@ if __name__ == "__main__":
         result[q][1] = i
 
     average_number=average_number/times
+    total_containing_number_fre=total_containing_number/total_iteration
+    print(total_containing_number_fre)
     print(average_number)
     print(times)
     print(result)
