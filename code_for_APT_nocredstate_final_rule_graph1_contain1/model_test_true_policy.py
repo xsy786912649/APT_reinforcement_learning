@@ -44,10 +44,10 @@ if __name__ == "__main__":
                 machine_state_list_delay = machine_state_list_delay_list[-1]
             
             action_contain_list1=[i for i in range(len(machine_state_list_delay)) if machine_state_list_delay[i]==True and machine_index_to_name(i) in contain_hop] 
-            if len(action_contain_list1)<=3:
+            if len(action_contain_list1)<=1:
                 action_contain_list=action_contain_list1
             else:
-                action_contain_list=[action_contain_list1[0],action_contain_list1[1],action_contain_list1[2]]
+                action_contain_list=[]
 
             total_containing_number+=len(action_contain_list)
             total_iteration+=1.0

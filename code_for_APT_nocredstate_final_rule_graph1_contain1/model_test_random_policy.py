@@ -32,7 +32,7 @@ if __name__ == "__main__":
         
         result[q] = [99999999999, -1]
         for i in range(5000):
-            action_index=random.randint(0, 1+len(contain_hop)+len(contain_hop)*(len(contain_hop)-1)/2+len(contain_hop)*(len(contain_hop)-1)*(len(contain_hop)-2)/6-1)
+            action_index=random.randint(0, 1+len(contain_hop)-1)
             action_contain_list=index_to_action(action_index)
 
             #state_transition
