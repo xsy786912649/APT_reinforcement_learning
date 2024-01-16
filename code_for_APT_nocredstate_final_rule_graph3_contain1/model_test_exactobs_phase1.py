@@ -26,7 +26,7 @@ if __name__ == "__main__":
     times=0
     total_iteration=0
     total_containing_number=0
-    for q in range(100):
+    for q in range(400):
         print("--------------------") 
         print(q)
 
